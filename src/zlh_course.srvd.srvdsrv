@@ -1,0 +1,5 @@
+@EndUserText.label: 'Courses service'
+define service Zlh_course {
+  expose zlh_c_course;
+  expose zlh_c_material;
+}

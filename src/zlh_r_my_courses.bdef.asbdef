@@ -1,0 +1,63 @@
+managed implementation in class zbp_lh_r_my_courses unique;
+strict ( 2 );
+
+define behavior for zlh_r_my_courses alias Course
+persistent table zlh_user_course
+lock master
+etag master LastChangedAt
+authorization master ( instance )
+{
+  update;
+  internal delete;
+  internal create;
+
+  action changeStatus parameter zlh_a_status result [1] $self;
+  internal action recalcPercentage;
+
+  field(readonly, numbering : managed) CourseId;
+  field(readonly) UserId, Percentage;
+
+  association _materials;
+
+  validation checkMaterialStatus on save { create; update; field Status; }
+
+
+  mapping for zlh_user_course corresponding
+  {
+    UserId = userid;
+    CourseId = courseid;
+    Status = status;
+    Percentage = percentage;
+    LastChangedAt = last_changed_at;
+  }
+}
+
+define behavior for zlh_r_my_course_materials alias Material
+persistent table zlh_user_mtrl
+lock dependent by _course
+authorization dependent by _course
+etag master LastChangedAt
+{
+  update;
+  internal delete;
+
+  field ( readonly ) CourseId;
+  field ( readonly : update ) MaterialId, UserId;
+
+  action changeStatusMaterial parameter zlh_a_status result [1] $self;
+  action markAsFinished;
+
+  determination calculatePercentage on save { create; update; }
+
+  association _course;
+
+  mapping for zlh_user_mtrl corresponding
+  {
+    UserId = userid;
+    CourseId = courseid;
+    MaterialId = materialid;
+    Status = status;
+    LastChangedAt = last_changed_at;
+  }
+
+}

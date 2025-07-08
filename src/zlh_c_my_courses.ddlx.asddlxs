@@ -1,0 +1,67 @@
+@Metadata.layer: #CUSTOMER
+annotate entity zlh_c_my_courses with
+{
+  @UI.facet: [
+    {    id: 'HeaderContainer',
+         purpose: #HEADER,
+         type: #COLLECTION },
+    {
+         id:'Header',
+         type: #FIELDGROUP_REFERENCE,
+         targetQualifier: 'CourseInfo',
+         parentId: 'HeaderContainer',
+         label: 'Course'
+    },
+    {    id: 'Percentage',
+         purpose: #HEADER,
+         type: #DATAPOINT_REFERENCE,
+         targetQualifier: 'Percentage',
+         parentId: 'HeaderContainer',
+         label: 'Completeness'},
+    {
+         id:'BookingData',
+         type: #LINEITEM_REFERENCE,
+         targetElement: '_materials',
+         label: 'Materials'
+    }]
+  @ UI: {
+    lineItem: [{ position: 1,
+                 hidden: true  },
+               { type: #FOR_ACTION, dataAction: 'changeStatus', label: 'Change Status', position: 10 } ],
+    fieldGroup: [{ qualifier: 'CourseInfo',
+                   position: 1 }]}
+  CourseId;
+  @ UI: {
+    lineItem: [{ position: 2,
+                 importance: #HIGH }],
+    fieldGroup: [{ qualifier: 'CourseInfo',
+                   position: 2 }]}
+  Name;
+  @ UI: {
+    lineItem: [{ position: 3,
+                 importance: #HIGH }],
+    fieldGroup: [{ qualifier: 'CourseInfo',
+                   position: 3 }]}
+  Duration;
+  @ UI: {
+    lineItem: [{ position: 4,
+                 importance: #HIGH }],
+    fieldGroup: [{ qualifier: 'CourseInfo',
+                   position: 4 }]}
+  @EndUserText.label: 'Status'
+  StatusText;
+  @ UI: {
+    lineItem: [ { hidden: true } ]}
+  @Consumption.filter.hidden: true
+  @UI.hidden: true
+  Status;
+  @ UI: {
+    lineItem: [{ hidden: true, type:#AS_DATAPOINT }],
+    fieldGroup: [{ qualifier: 'CourseInfo',
+                   position: 5}],
+    dataPoint: { visualization: #PROGRESS, 
+                 qualifier: 'Percentage',
+                 targetValue: 100 }
+    }
+  Percentage;
+}

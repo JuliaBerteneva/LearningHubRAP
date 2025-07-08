@@ -1,0 +1,68 @@
+@Metadata.layer: #CUSTOMER
+annotate entity zlh_c_my_course_materials with
+{
+  @UI.facet: [
+    {
+         id:'Header',
+         purpose: #HEADER,
+         type: #FIELDGROUP_REFERENCE,
+         targetQualifier: 'MaterialInfo',
+         label: 'Material'
+    },
+    {    
+         id: 'Change',
+         type: #FIELDGROUP_REFERENCE,
+         targetQualifier: 'MaterialChange',
+         label: 'Move Status'}]
+  @ UI: {
+    lineItem: [{ position: 1,
+                 importance: #HIGH },
+               { type: #FOR_ACTION, dataAction: 'changeStatusMaterial', label: 'Change Status', position: 10 },
+               { type: #FOR_ACTION, dataAction: 'markAsFinished', label: 'Finish', position: 10 }],
+    fieldGroup: [{ qualifier: 'MaterialInfo',
+                   position: 1 }]}
+  Materialid;
+  @ UI: {
+    lineItem: [{ position: 2,
+                 importance: #HIGH }],
+    fieldGroup: [{ qualifier: 'MaterialInfo',
+                   position: 2 }]}
+  CourseId;
+  @ UI: {
+    lineItem: [{ position: 3,
+                 importance: #HIGH }],
+    fieldGroup: [{ qualifier: 'MaterialInfo',
+                   position: 3 }]}
+  Name;
+  @ UI: {
+    lineItem: [{ position: 4,
+                 importance: #HIGH }],
+    fieldGroup: [{ qualifier: 'MaterialInfo',
+                   position: 4 }]}
+  Duration;
+  @ UI: {
+    lineItem: [{ position: 5,
+                 importance: #HIGH }],
+    fieldGroup: [{ qualifier: 'MaterialInfo',
+                   position: 5 }
+//                 { qualifier: 'MaterialChange',
+//                   position: 2 }
+                   ]}
+  @EndUserText.label: 'Status'
+  StatusText;
+  @Consumption.filter.hidden: true
+  @ UI: {
+    fieldGroup: [{ qualifier: 'MaterialChange',
+                   position: 1 }]}
+  Status;
+  @ UI: {
+    lineItem: [{ position: 6,
+                 importance: #HIGH,
+                   type: #WITH_URL,
+                   url: 'Content' }],
+    fieldGroup: [{ qualifier: 'MaterialInfo',
+                   position: 6,
+                   type: #WITH_URL,
+                   url: 'Content' }]}
+  Content;
+}

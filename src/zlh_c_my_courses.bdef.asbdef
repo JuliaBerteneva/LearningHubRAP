@@ -1,0 +1,17 @@
+projection;
+strict ( 2 );
+use side effects;
+
+define behavior for zlh_c_my_courses alias Course
+{
+  use action changeStatus;
+  use association _materials;
+}
+
+define behavior for zlh_c_my_course_materials alias Material
+{
+  use update;
+  use association _course;
+  use action changeStatusMaterial;
+  use action markAsFinished;
+}

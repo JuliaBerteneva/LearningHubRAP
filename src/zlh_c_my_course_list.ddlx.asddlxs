@@ -1,0 +1,25 @@
+@Metadata.layer: #CUSTOMER
+annotate entity zlh_c_my_course_list with
+{
+  @UI.lineItem: [{ position: 10 }]
+  Name;
+  @UI.lineItem: [{ position: 20, criticality: 'Criticality' }]
+  @EndUserText.label: 'Status'
+  StatusText;
+  @UI:{
+   lineItem: [{ type: #AS_DATAPOINT,
+                importance: #HIGH,
+                position: 30,
+                qualifier: 'Percentage'
+              }],
+   dataPoint: { title: 'Course Completeness',
+                valueFormat.numberOfFractionalDigits: 2,
+                minimumValue: 0,
+                maximumValue: 100,
+                criticalityCalculation: { improvementDirection: #MAXIMIZE,
+                                          toleranceRangeLowValue: 50,
+                                          deviationRangeLowValue: 30 }
+                }
+   }
+  Percentage;
+}

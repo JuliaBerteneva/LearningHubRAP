@@ -1,0 +1,5 @@
+CLASS zbp_lh_r_my_courses DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zlh_r_my_courses.
+ENDCLASS.
+
+CLASS zbp_lh_r_my_courses IMPLEMENTATION.
+ENDCLASS.

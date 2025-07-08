@@ -1,0 +1,73 @@
+managed implementation in class zbp_lh_r_course unique;
+strict ( 2 );
+with draft;
+
+define behavior for zlh_r_course alias Course
+persistent table zlh_course
+draft table zlh_course_d
+lock master
+total etag LastChangedAt
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  field (readonly, numbering : managed) CourseId;
+  field (readonly)LastChangedAt, LocalCreatedBy, LocalCreatedAt, LocalLastChangedAt, LocalLastChangedBy, Duration;
+
+
+  action assignMeToCourse;
+  internal action recalcDuration;
+
+  association _materials { create; with draft;}
+  mapping for zlh_course corresponding{
+    CourseId = course_id;
+    CourseKey = course_key;
+    Name = name;
+    Moderator = moderator;
+    Duration = duration;
+    LocalCreatedAt = local_created_at;
+    LocalCreatedBy = local_created_by;
+    LocalLastChangedAt = local_last_changed_at;
+    LocalLastChangedBy = local_last_changed_by;
+    LastChangedAt = last_changed_at;
+  }
+
+  draft action Resume;
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft determine action Prepare{
+    }
+}
+
+define behavior for zlh_r_material alias Material
+persistent table zlh_material
+draft table zlh_material_d
+lock dependent by _course
+authorization dependent by _course
+etag master LastChangedAt
+{
+  update;
+  delete;
+
+  field ( readonly, numbering : managed ) MaterialId;
+  field (readonly) CourseId, LastChangedAt;
+
+  association _course { with draft; }
+
+  determination calcDuration on save { create; update; }
+
+  mapping for zlh_material corresponding{
+    CourseId = course_id;
+    MaterialId = material_id;
+    MaterialKey = material_key;
+    Type = type;
+    Name = name;
+    Duration = duration;
+    Content = content;
+    LastChangedAt = last_changed_at;
+  }
+}

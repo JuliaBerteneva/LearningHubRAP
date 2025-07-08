@@ -1,0 +1,11 @@
+@EndUserText.label: 'My Courses'
+define service zlh_my_courses {
+  expose zlh_c_my_courses;
+  expose zlh_c_my_course_materials;
+  expose zlh_i_my_info;
+  expose zlh_c_course;
+  expose zlh_c_material;
+  expose zlh_c_my_course_chart;
+  expose zlh_c_my_courses_filter;
+  expose zlh_c_my_course_list;
+}

@@ -1,0 +1,91 @@
+@Metadata.layer: #CUSTOMER
+annotate entity zlh_c_material with
+{
+  @UI.facet: [
+
+    {
+         id:'Container',
+         purpose: #HEADER,
+         type: #COLLECTION
+    },
+    {
+         id:'CourseInfo',
+         type: #FIELDGROUP_REFERENCE,
+         targetElement: '_course',
+         targetQualifier: 'Name',
+         label: 'Course',
+         parentId: 'Container'
+    },
+    {
+         id:'Header',
+         type: #FIELDGROUP_REFERENCE,
+         targetQualifier: 'Header',
+         label: 'Material',
+         parentId: 'Container'
+    },
+    {
+         id:'Main',
+         type: #FIELDGROUP_REFERENCE,
+         targetQualifier: 'Material',
+         label: 'Main Information'
+    }
+    ]
+  @ UI: {
+    fieldGroup: [{ qualifier: 'Material',
+                   hidden: true }]
+    }
+  CourseId;
+  @ UI: {
+    fieldGroup: [{ qualifier: 'Material',
+                   hidden: true }]
+    }
+  MaterialId;
+  @ UI: {
+    fieldGroup: [{ qualifier: 'Material',
+                   hidden: true }]
+    }
+  MaterialKey;
+  @ UI: {
+    lineItem: [{ position: 3,
+                 importance: #HIGH ,
+                 label: 'Type'}],
+    fieldGroup: [{ qualifier: 'Material',
+                   position: 1 }]
+    }
+  Type;
+  @ UI: {
+    lineItem: [{ position: 1,
+                 importance: #HIGH ,
+                 label: 'Material Name',
+                 type: #WITH_URL,
+                 url: 'Content' }],
+    fieldGroup: [{ qualifier: 'Material',
+                   position: 2,
+                   type: #WITH_URL,
+                   url: 'Content' },
+                 { qualifier: 'Header' }]
+    }
+  Name;
+  @ UI: {
+    lineItem: [{ position: 2,
+                 importance: #HIGH ,
+                 label: 'Duration' }],
+    fieldGroup: [{ qualifier: 'Material',
+                   position: 3 },
+                 { qualifier: 'Header' }]
+    }
+  Duration;
+  @ UI: {
+    lineItem: [{ position: 4,
+                 importance: #HIGH ,
+                 label: 'Content',
+                 type: #WITH_URL,
+                 url: 'Content'  }],
+    fieldGroup: [{ qualifier: 'Material',
+                   position: 4,
+                   type : #WITH_URL,
+                   url: 'Content' }]
+    }
+  Content;
+
+}

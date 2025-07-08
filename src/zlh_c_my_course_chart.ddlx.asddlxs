@@ -1,0 +1,30 @@
+@Metadata.layer: #CUSTOMER
+@UI.chart: [
+{
+    qualifier: 'StatusChart',
+    title: 'Projects by Status',
+    chartType: #DONUT,
+    dimensions: [ 'Status', 'StatusText' ] ,
+    measures: [ 'TotalAmount' ],
+    dimensionAttributes: [
+        {dimension: 'Status', role: #CATEGORY},
+        {dimension: 'StatusText', role: #CATEGORY}
+    ],
+    measureAttributes: [
+        {measure: 'TotalAmount', role: #AXIS_1, asDataPoint: true}
+    ]
+}]
+annotate entity zlh_c_my_course_chart with
+
+{
+  @UI.identification: [{
+  type : #FOR_INTENT_BASED_NAVIGATION,
+  semanticObjectAction: 'CourseId' }]
+  CourseId;
+  @UI.textArrangement: #TEXT_FIRST
+  Status;
+  @UI.textArrangement: #TEXT_FIRST
+  StatusText;
+  @UI.dataPoint.visualization: #NUMBER
+  TotalAmount;
+}
