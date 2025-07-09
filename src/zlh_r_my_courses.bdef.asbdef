@@ -12,7 +12,7 @@ authorization master ( instance )
   internal create;
 
   action changeStatus parameter zlh_a_status result [1] $self;
-  internal action recalcPercentage;
+  internal action recalcPercentage result [1] $self;
 
   field(readonly, numbering : managed) CourseId;
   field(readonly) UserId, Percentage;

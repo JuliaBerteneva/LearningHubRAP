@@ -1,4 +1,5 @@
-CLASS lhc_Course DEFINITION INHERITING FROM cl_abap_behavior_handler.
+CLASS ltcl_course DEFINITION DEFERRED FOR TESTING.
+CLASS lhc_Course DEFINITION INHERITING FROM cl_abap_behavior_handler friends ltcl_course.
   PRIVATE SECTION.
 
     METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
@@ -79,12 +80,12 @@ CLASS lhc_Course IMPLEMENTATION.
     LOOP AT courses ASSIGNING FIELD-SYMBOL(<course>).
       APPEND VALUE #( userId = sy-uname
                       courseid = <course>-CourseId
-                      status = 'IN PROCESS' ) TO course_connections.
+                      status = zcl_cc_zlh_status=>gc_inprocess ) TO course_connections.
       LOOP AT materials ASSIGNING FIELD-SYMBOL(<material>).
         APPEND VALUE #( userId = sy-uname
                         materialId = <material>-MaterialId
                         courseId = <course>-CourseId
-                        Status = 'NOTSTARTED' ) TO material_connections.
+                        Status = zcl_cc_zlh_status=>gc_notstarted ) TO material_connections.
       ENDLOOP.
     ENDLOOP.
     IF course_connections IS NOT INITIAL.

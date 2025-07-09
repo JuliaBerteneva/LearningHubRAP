@@ -23,7 +23,7 @@ CLASS lhc_Course DEFINITION INHERITING FROM cl_abap_behavior_handler FRIENDS ltc
       IMPORTING keys FOR Material~calculatePercentage.
 
     METHODS recalcPercentage FOR MODIFY
-      IMPORTING keys FOR ACTION Course~recalcPercentage.
+      IMPORTING keys FOR ACTION Course~recalcPercentage RESULT result.
 
 ENDCLASS.
 
@@ -97,11 +97,6 @@ CLASS lhc_Course IMPLEMENTATION.
          REPORTED DATA(course_reported).
     ENDIF.
 
-*    MODIFY ENTITIES OF zlh_r_my_courses IN LOCAL MODE
-*        ENTITY Course
-*        EXECUTE recalcPercentage
-*        FROM CORRESPONDING #( courses ).
-
   ENDMETHOD.
 
   METHOD markAsFinished.
@@ -116,18 +111,13 @@ CLASS lhc_Course IMPLEMENTATION.
         RESULT DATA(courses).
 
     LOOP AT materials ASSIGNING FIELD-SYMBOL(<material>).
-      <material>-status = 'FINISHED'.
+      <material>-status = zcl_cc_zlh_status=>gc_finished.
     ENDLOOP.
 
     MODIFY ENTITIES OF zlh_R_my_courses IN LOCAL MODE
         ENTITY Material
         UPDATE FIELDS ( Status )
         WITH CORRESPONDING #( materials ).
-
-*    MODIFY ENTITIES OF zlh_r_my_courses IN LOCAL MODE
-*        ENTITY Course
-*        EXECUTE recalcPercentage
-*        FROM CORRESPONDING #( courses ).
   ENDMETHOD.
 
   METHOD checkMaterailStatus.
@@ -146,10 +136,10 @@ CLASS lhc_Course IMPLEMENTATION.
     LINK DATA(material_link).
 
     LOOP AT Courses ASSIGNING FIELD-SYMBOL(<course>).
-      IF <course>-status = 'FINISHED'.
+      IF <course>-status = zcl_cc_zlh_status=>gc_finished.
         LOOP AT material_link ASSIGNING FIELD-SYMBOL(<link>) USING KEY id WHERE  source-%tky = <course>-%tky.
           DATA(material) = materials[ KEY id  %tky = <link>-target-%tky ].
-          IF material-status <> 'FINISHED'.
+          IF material-status <> zcl_cc_zlh_status=>gc_finished.
             APPEND VALUE #(  %tky = <course>-%tky ) TO failed-course.
 
             APPEND VALUE #(  %tky                = <course>-%tky
@@ -173,10 +163,10 @@ CLASS lhc_Course IMPLEMENTATION.
           WITH CORRESPONDING #( keys )
           LINK DATA(links)
           RESULT DATA(courses).
-*    MODIFY ENTITIES OF zlh_r_my_courses IN LOCAL MODE
-*        ENTITY Course
-*        EXECUTE recalcPercentage
-*        FROM CORRESPONDING #( courses ).
+    MODIFY ENTITIES OF zlh_r_my_courses IN LOCAL MODE
+        ENTITY Course
+        EXECUTE recalcPercentage
+        FROM CORRESPONDING #( courses ).
 
   ENDMETHOD.
 
@@ -200,23 +190,25 @@ CLASS lhc_Course IMPLEMENTATION.
       CLEAR overall_course_duration.
       LOOP AT material_link ASSIGNING FIELD-SYMBOL(<material_link>) USING KEY id WHERE source-%tky = <course>-%tky.
         DATA(material) = materials[ KEY id  %tky = <material_link>-target-%tky ].
-        overall_course_duration = overall_course_duration + material-Duration.
+        IF material-status <> zcl_cc_zlh_status=>gc_cancelled.
+          overall_course_duration = overall_course_duration + material-Duration.
 
-        CASE material-status.
-          WHEN 'FINISHED'.
+          IF material-status = zcl_cc_zlh_status=>gc_finished.
             finished_duration = finished_duration + material-duration.
-          WHEN OTHERS.
-        ENDCASE.
+          ENDIF.
+        ENDIF.
       ENDLOOP.
-      <course>-percentage = overall_course_duration / 100 * finished_duration.
+      <course>-percentage = 100 / overall_course_duration * finished_duration.
     ENDLOOP.
 
     MODIFY ENTITIES OF zlh_R_my_courses IN LOCAL MODE
         ENTITY Course
-        UPDATE FIELDS ( Percent )
+        UPDATE FIELDS ( Percentage )
         WITH CORRESPONDING #( courses )
         FAILED failed
         REPORTED reported.
+
+    result = VALUE #( FOR course IN courses ( %tky = course-%tky ) ).
   ENDMETHOD.
 
 ENDCLASS.
