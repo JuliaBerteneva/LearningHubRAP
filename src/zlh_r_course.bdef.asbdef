@@ -7,12 +7,12 @@ persistent table zlh_course
 draft table zlh_course_d
 lock master
 total etag LastChangedAt
-authorization master ( instance )
+authorization master (global)
 etag master LocalLastChangedAt
 {
-  create;
-  update;
-  delete;
+  create( features : global );
+  update( features : global );
+  delete( features : global );
 
   field (readonly, numbering : managed) CourseId;
   field (readonly)LastChangedAt, LocalCreatedBy, LocalCreatedAt, LocalLastChangedAt, LocalLastChangedBy, Duration;

@@ -30,8 +30,8 @@ annotate entity zlh_c_course
           { type: #FOR_ACTION, dataAction: 'assignMeToCourse', label: 'Assign Me', position: 10 }
         ],
       fieldGroup: [{ qualifier: 'Course',
-                     position: 1 }] 
-      }
+                     position: 1 }],
+      hidden: true }
     @UI.identification: [ {type: #FOR_ACTION, dataAction: 'assignMeToCourse', label: 'Assign Me' } ]
     CourseId;
     @ UI: {

@@ -1,9 +1,12 @@
 CLASS ltcl_course DEFINITION DEFERRED FOR TESTING.
-CLASS lhc_Course DEFINITION INHERITING FROM cl_abap_behavior_handler friends ltcl_course.
+CLASS lhc_Course DEFINITION INHERITING FROM cl_abap_behavior_handler FRIENDS ltcl_course.
   PRIVATE SECTION.
 
-    METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
-      IMPORTING keys REQUEST requested_authorizations FOR Course RESULT result.
+    METHODS get_global_authorizations FOR GLOBAL AUTHORIZATION
+      IMPORTING REQUEST requested_authorizations FOR Course RESULT result.
+
+    METHODS get_features_global FOR GLOBAL FEATURES
+      IMPORTING REQUEST requested_features FOR Course RESULT result.
 
     METHODS calcDuration FOR DETERMINE ON SAVE
       IMPORTING keys FOR Material~calcDuration.
@@ -17,8 +20,22 @@ CLASS lhc_Course DEFINITION INHERITING FROM cl_abap_behavior_handler friends ltc
 ENDCLASS.
 
 CLASS lhc_Course IMPLEMENTATION.
+  METHOD get_global_authorizations.
+  ENDMETHOD.
 
-  METHOD get_instance_authorizations.
+  METHOD get_features_global.
+    AUTHORITY-CHECK OBJECT 'ZLH_COURSE' ID 'ACTVT' FIELD '06'.
+    IF sy-subrc IS NOT INITIAL.
+      result-%delete = if_abap_behv=>auth-unauthorized.
+    ENDIF.
+    AUTHORITY-CHECK OBJECT 'ZLH_COURSE' ID 'ACTVT' FIELD '01'.
+    IF sy-subrc IS NOT INITIAL.
+      result-%create = if_abap_behv=>auth-unauthorized.
+    ENDIF.
+    AUTHORITY-CHECK OBJECT 'ZLH_COURSE' ID 'ACTVT' FIELD '02'.
+    IF sy-subrc IS NOT INITIAL.
+      result-%update = if_abap_behv=>auth-unauthorized.
+    ENDIF.
   ENDMETHOD.
 
   METHOD calcDuration.
@@ -80,12 +97,14 @@ CLASS lhc_Course IMPLEMENTATION.
     LOOP AT courses ASSIGNING FIELD-SYMBOL(<course>).
       APPEND VALUE #( userId = sy-uname
                       courseid = <course>-CourseId
-                      status = zcl_cc_zlh_status=>gc_inprocess ) TO course_connections.
+                      status = zcl_cc_zlh_status=>gc_inprocess
+                      start_date = sy-datum ) TO course_connections.
       LOOP AT materials ASSIGNING FIELD-SYMBOL(<material>).
         APPEND VALUE #( userId = sy-uname
                         materialId = <material>-MaterialId
                         courseId = <course>-CourseId
-                        Status = zcl_cc_zlh_status=>gc_notstarted ) TO material_connections.
+                        Status = zcl_cc_zlh_status=>gc_notstarted
+                        start_date = sy-datum ) TO material_connections.
       ENDLOOP.
     ENDLOOP.
     IF course_connections IS NOT INITIAL.

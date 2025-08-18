@@ -10,6 +10,7 @@ define view zlh_i_type_vh as select from dd07l as l
                              t.valpos = l.valpos and
                              t.as4vers = l.as4vers
 {
+  @ObjectModel.text.element: [ 'Description' ]
   key l.domvalue_l as Value,
   @Semantics.text: true
   t.ddtext as Description

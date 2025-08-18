@@ -5,7 +5,7 @@ annotate entity zlh_c_my_course_list with
   Name;
   @UI.lineItem: [{ position: 20, criticality: 'Criticality' }]
   @EndUserText.label: 'Status'
-  StatusText;
+  Status;
   @UI:{
    lineItem: [{ type: #AS_DATAPOINT,
                 importance: #HIGH,
@@ -16,6 +16,7 @@ annotate entity zlh_c_my_course_list with
                 valueFormat.numberOfFractionalDigits: 2,
                 minimumValue: 0,
                 maximumValue: 100,
+                qualifier: 'Percentage',
                 criticalityCalculation: { improvementDirection: #MAXIMIZE,
                                           toleranceRangeLowValue: 50,
                                           deviationRangeLowValue: 30 }

@@ -11,8 +11,9 @@ authorization master ( instance )
   internal delete;
   internal create;
 
-  action changeStatus parameter zlh_a_status result [1] $self;
+  action changeStatus parameter zlh_a_status;
   internal action recalcPercentage result [1] $self;
+  internal action finishCourse result [1] $self;
 
   field(readonly, numbering : managed) CourseId;
   field(readonly) UserId, Percentage;
@@ -28,6 +29,8 @@ authorization master ( instance )
     CourseId = courseid;
     Status = status;
     Percentage = percentage;
+    StartDate = start_date;
+    EndDate = end_date;
     LastChangedAt = last_changed_at;
   }
 }
@@ -44,8 +47,8 @@ etag master LastChangedAt
   field ( readonly ) CourseId;
   field ( readonly : update ) MaterialId, UserId;
 
-  action changeStatusMaterial parameter zlh_a_status result [1] $self;
-  action markAsFinished;
+  action (features: instance)changeStatusMaterial  parameter zlh_a_status ;
+  action (features : instance) markAsFinished;
 
   determination calculatePercentage on save { create; update; }
 
@@ -57,6 +60,8 @@ etag master LastChangedAt
     CourseId = courseid;
     MaterialId = materialid;
     Status = status;
+    StartDate = start_date;
+    EndDate = end_date;
     LastChangedAt = last_changed_at;
   }
 

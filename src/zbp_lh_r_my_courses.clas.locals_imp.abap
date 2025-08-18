@@ -9,10 +9,10 @@ CLASS lhc_Course DEFINITION INHERITING FROM cl_abap_behavior_handler FRIENDS ltc
       IMPORTING keys REQUEST requested_authorizations FOR Material RESULT result.
 
     METHODS changeStatus FOR MODIFY
-      IMPORTING keys FOR ACTION Course~changeStatus RESULT result.
+      IMPORTING keys FOR ACTION Course~changeStatus.
 
     METHODS chageStatusMaterial FOR MODIFY
-      IMPORTING keys FOR ACTION Material~changeStatusMaterial RESULT result.
+      IMPORTING keys FOR ACTION Material~changeStatusMaterial.
 
     METHODS markasFinished FOR MODIFY
       IMPORTING keys FOR ACTION Material~markasFinished.
@@ -24,6 +24,12 @@ CLASS lhc_Course DEFINITION INHERITING FROM cl_abap_behavior_handler FRIENDS ltc
 
     METHODS recalcPercentage FOR MODIFY
       IMPORTING keys FOR ACTION Course~recalcPercentage RESULT result.
+
+    METHODS finishCourse FOR MODIFY
+      IMPORTING keys FOR ACTION Course~finishCourse RESULT result.
+
+    METHODS get_features FOR INSTANCE FEATURES
+      IMPORTING keys REQUEST requested_features FOR Material RESULT result.
 
 ENDCLASS.
 
@@ -38,20 +44,21 @@ CLASS lhc_Course IMPLEMENTATION.
   METHOD changeStatus.
     READ ENTITIES OF zlh_R_my_courses IN LOCAL MODE
         ENTITY Course
-        FIELDS (  CourseId Status )
+        FIELDS (  CourseId Status EndDate )
         WITH CORRESPONDING #( keys )
         RESULT DATA(courses).
 
     LOOP AT courses ASSIGNING FIELD-SYMBOL(<course>).
       <course>-status = keys[ KEY id  %key = <course>-%key ]-%param-instatus.
+      IF <course>-status = zcl_cc_zlh_status=>gc_finished.
+        <course>-EndDate = sy-datum.
+      ENDIF.
     ENDLOOP.
 
     MODIFY ENTITIES OF zlh_R_my_courses IN LOCAL MODE
         ENTITY Course
-        UPDATE FIELDS ( Status )
+        UPDATE FIELDS ( Status EndDate )
         WITH CORRESPONDING #( courses ).
-
-    result = VALUE #( FOR course IN courses ( %tky      = course-%tky ) ).
   ENDMETHOD.
 
   METHOD chageStatusMaterial.
@@ -60,30 +67,33 @@ CLASS lhc_Course IMPLEMENTATION.
     READ ENTITIES OF zlh_R_my_courses IN LOCAL MODE
 
         ENTITY Material
-        FIELDS (  CourseId MaterialId Status )
+        FIELDS ( CourseId MaterialId Status EndDate )
         WITH CORRESPONDING #( keys )
         RESULT DATA(materials)
 
         ENTITY Material BY \_course
-        FIELDS ( CourseId Percentage Status )
+        FIELDS ( CourseId Percentage Status EndDate )
         WITH CORRESPONDING #( keys )
         LINK DATA(course_link)
         RESULT DATA(courses).
 
     LOOP AT materials ASSIGNING FIELD-SYMBOL(<material>).
       <material>-status = keys[ materialId = <material>-materialId ]-%param-instatus.
+      IF <material>-status = zcl_cc_zlh_status=>gc_finished.
+        <material>-EndDate = sy-datum.
+      ENDIF.
       DATA(course) = courses[ CourseId = <material>-CourseId ].
-      IF course-Status = 'FINISHED' AND <material>-Status <> 'FINISHED'.
-        course-Status = 'IN PROCESS'.
+      IF course-Status = zcl_cc_zlh_status=>gc_finished AND <material>-Status <> zcl_cc_zlh_status=>gc_finished.
+        course-Status = zcl_cc_zlh_status=>gc_inprocess.
+        CLEAR course-EndDate.
         ls_course_update = CORRESPONDING #( course ).
         APPEND ls_course_update TO lt_course_update.
       ENDIF.
-
     ENDLOOP.
 
     MODIFY ENTITIES OF zlh_r_my_courses IN LOCAL MODE
         ENTITY Material
-        UPDATE FIELDS ( Status )
+        UPDATE FIELDS ( Status EndDate )
         WITH CORRESPONDING #( materials )
         FAILED failed
         REPORTED reported.
@@ -91,7 +101,7 @@ CLASS lhc_Course IMPLEMENTATION.
     IF lt_course_update IS NOT INITIAL.
       MODIFY ENTITIES OF zlh_r_my_courses IN LOCAL MODE
          ENTITY Course
-         UPDATE FIELDS ( Status )
+         UPDATE FIELDS ( Status EndDate )
          WITH CORRESPONDING #( lt_course_update )
          FAILED DATA(course_failed)
          REPORTED DATA(course_reported).
@@ -102,7 +112,7 @@ CLASS lhc_Course IMPLEMENTATION.
   METHOD markAsFinished.
     READ ENTITIES OF zlh_R_my_courses IN LOCAL MODE
         ENTITY Material
-        FIELDS (  CourseId MaterialId Status )
+        FIELDS (  CourseId MaterialId Status EndDate )
         WITH CORRESPONDING #( keys )
         RESULT DATA(materials)
         ENTITY Material BY \_course
@@ -112,12 +122,62 @@ CLASS lhc_Course IMPLEMENTATION.
 
     LOOP AT materials ASSIGNING FIELD-SYMBOL(<material>).
       <material>-status = zcl_cc_zlh_status=>gc_finished.
+      <material>-EndDate = sy-datum.
     ENDLOOP.
 
     MODIFY ENTITIES OF zlh_R_my_courses IN LOCAL MODE
         ENTITY Material
-        UPDATE FIELDS ( Status )
+        UPDATE FIELDS ( Status EndDate )
         WITH CORRESPONDING #( materials ).
+
+    "if all materials are already finished, course will be also automatically finished
+    MODIFY ENTITIES OF zlh_r_my_courses IN LOCAL MODE
+        ENTITY Course
+        EXECUTE finishCourse
+        FROM CORRESPONDING #( courses ).
+
+  ENDMETHOD.
+
+  METHOD finishCourse.
+    READ ENTITIES OF zlh_r_my_courses IN LOCAL MODE
+      ENTITY Course
+      FIELDS ( CourseId Percentage )
+      WITH CORRESPONDING #( keys )
+      RESULT DATA(courses).
+
+    READ ENTITIES OF zlh_r_my_courses IN LOCAL MODE
+      ENTITY Course BY \_materials
+      FIELDS ( MaterialId Status Duration )
+      WITH CORRESPONDING #( courses )
+      RESULT DATA(materials)
+      LINK DATA(material_link).
+
+    LOOP AT courses ASSIGNING FIELD-SYMBOL(<course>).
+      LOOP AT material_link ASSIGNING FIELD-SYMBOL(<material_link>) USING KEY id WHERE source-%tky = <course>-%tky.
+        DATA(material) = materials[ KEY id  %tky = <material_link>-target-%tky ].
+        IF material-status <> zcl_cc_zlh_status=>gc_cancelled
+            AND material-status <> zcl_cc_zlh_status=>gc_finished.
+          DATA(lv_course_not_finished) = abap_true.
+        ENDIF.
+        IF <course>-Status = zcl_cc_zlh_status=>gc_finished AND
+            material-status <> zcl_cc_zlh_status=>gc_finished.
+          <course>-Status = zcl_cc_zlh_status=>gc_inprocess.
+        ENDIF.
+      ENDLOOP.
+      IF lv_course_not_finished IS INITIAL.
+        "change the status of whole course
+        <course>-Status = zcl_cc_zlh_status=>gc_finished.
+      ENDIF.
+    ENDLOOP.
+
+    MODIFY ENTITIES OF zlh_R_my_courses IN LOCAL MODE
+        ENTITY Course
+        UPDATE FIELDS ( Status )
+        WITH CORRESPONDING #( courses )
+        FAILED failed
+        REPORTED reported.
+
+    result = VALUE #( FOR course IN courses ( %tky = course-%tky ) ).
   ENDMETHOD.
 
   METHOD checkMaterailStatus.
@@ -209,6 +269,22 @@ CLASS lhc_Course IMPLEMENTATION.
         REPORTED reported.
 
     result = VALUE #( FOR course IN courses ( %tky = course-%tky ) ).
+  ENDMETHOD.
+
+  METHOD get_features.
+    READ ENTITIES OF zlh_r_my_courses IN LOCAL MODE
+      ENTITY Material
+         FIELDS ( MaterialId Status )
+         WITH CORRESPONDING #( keys )
+       RESULT DATA(materials)
+       FAILED failed.
+
+
+    result = VALUE #( FOR material IN materials
+                       ( %tky                           = material-%tky
+                         %features-%action-markAsFinished = COND #( WHEN material-status = zcl_cc_zlh_status=>gc_finished
+                                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
+                      ) ).
   ENDMETHOD.
 
 ENDCLASS.

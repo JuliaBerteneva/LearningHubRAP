@@ -15,5 +15,7 @@ as select from zlh_i_user_course as user
     user.Name,
     user.Moderator,
     user.Duration,
+    user.StartDate,
+    user.EndDate,
     user.LastChangedAt
 } where user.Userid = $session.user

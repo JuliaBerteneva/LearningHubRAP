@@ -15,5 +15,7 @@ as select from zlh_i_user_material as user
     user.Status,
     user.StatusText,
     user.Userid,
+    user.StartDate,
+    user.EndDate,
     user.LastChangedAt
 } where user.Userid = $session.user

@@ -19,5 +19,7 @@ left outer join ZLH_I_STATUS_VH as status on status.Value = user.status
     user.percentage as Percentage,
     @Semantics.unitOfMeasure: true
     cast ( '%' as abap.unit( 3 ) ) as Percent,
+    user.start_date as StartDate,
+    user.end_date as EndDate,
     user.last_changed_at as LastChangedAt
 }

@@ -23,8 +23,6 @@ annotate entity zlh_c_my_course_chart with
   CourseId;
   @UI.textArrangement: #TEXT_FIRST
   Status;
-  @UI.textArrangement: #TEXT_FIRST
-  StatusText;
   @UI.dataPoint.visualization: #NUMBER
   TotalAmount;
 }

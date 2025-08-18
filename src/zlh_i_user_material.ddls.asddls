@@ -17,5 +17,7 @@ left outer join ZLH_I_STATUS_VH as status on status.Value = user.status
     material.Name,
     material.Duration,
     material.Content,
+    user.start_date as StartDate,
+    user.end_date as EndDate,
     user.last_changed_at as LastChangedAt
 }

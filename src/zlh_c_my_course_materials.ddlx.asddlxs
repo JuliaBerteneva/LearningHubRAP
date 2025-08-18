@@ -20,7 +20,9 @@ annotate entity zlh_c_my_course_materials with
                { type: #FOR_ACTION, dataAction: 'changeStatusMaterial', label: 'Change Status', position: 10 },
                { type: #FOR_ACTION, dataAction: 'markAsFinished', label: 'Finish', position: 10 }],
     fieldGroup: [{ qualifier: 'MaterialInfo',
-                   position: 1 }]}
+                   position: 1 } ],
+    hidden: true }
+  @UI.identification: [ {type: #FOR_ACTION, dataAction: 'markAsFinished', label: 'Finish' } ] 
   Materialid;
   @ UI: {
     lineItem: [{ position: 2,
@@ -44,16 +46,9 @@ annotate entity zlh_c_my_course_materials with
     lineItem: [{ position: 5,
                  importance: #HIGH }],
     fieldGroup: [{ qualifier: 'MaterialInfo',
-                   position: 5 }
-//                 { qualifier: 'MaterialChange',
-//                   position: 2 }
-                   ]}
-  @EndUserText.label: 'Status'
-  StatusText;
-  @Consumption.filter.hidden: true
-  @ UI: {
-    fieldGroup: [{ qualifier: 'MaterialChange',
-                   position: 1 }]}
+                   position: 5 },
+                 { qualifier: 'MaterialChange',
+                   position: 1 }] }
   Status;
   @ UI: {
     lineItem: [{ position: 6,

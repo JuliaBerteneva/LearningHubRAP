@@ -1,4 +1,5 @@
 @Metadata.layer: #CUSTOMER
+@UI.lineItem: [{criticality: 'Criticality'}]
 annotate entity zlh_c_my_courses with
 {
   @UI.facet: [
@@ -26,10 +27,12 @@ annotate entity zlh_c_my_courses with
     }]
   @ UI: {
     lineItem: [{ position: 1,
-                 hidden: true  },
-               { type: #FOR_ACTION, dataAction: 'changeStatus', label: 'Change Status', position: 10 } ],
+                 hidden: true  }],
     fieldGroup: [{ qualifier: 'CourseInfo',
-                   position: 1 }]}
+                   position: 1 },
+    {type: #FOR_ACTION, dataAction: 'changeStatus', label: 'Change Status', position: 10 }],
+    hidden: true }
+                   
   CourseId;
   @ UI: {
     lineItem: [{ position: 2,
@@ -44,24 +47,28 @@ annotate entity zlh_c_my_courses with
                    position: 3 }]}
   Duration;
   @ UI: {
-    lineItem: [{ position: 4,
-                 importance: #HIGH }],
+    lineItem: [ { position: 4,
+                 importance: #HIGH,
+                 criticality: 'Criticality',
+                 criticalityRepresentation : #WITHOUT_ICON } ],
     fieldGroup: [{ qualifier: 'CourseInfo',
-                   position: 4 }]}
+                   position: 4,
+                   importance: #HIGH,
+                   criticality: 'Criticality',
+                   criticalityRepresentation : #WITHOUT_ICON  }]}
   @EndUserText.label: 'Status'
-  StatusText;
-  @ UI: {
-    lineItem: [ { hidden: true } ]}
-  @Consumption.filter.hidden: true
-  @UI.hidden: true
   Status;
   @ UI: {
-    lineItem: [{ hidden: true, type:#AS_DATAPOINT }],
     fieldGroup: [{ qualifier: 'CourseInfo',
                    position: 5}],
-    dataPoint: { visualization: #PROGRESS, 
+    dataPoint: { visualization: #PROGRESS,
                  qualifier: 'Percentage',
-                 targetValue: 100 }
+                 targetValue: 100 },
+    lineItem: [ { hidden: true } ]
     }
   Percentage;
+  @ UI: {
+    lineItem: [ { hidden: true }]
+     }
+  Criticality;
 }

@@ -7,7 +7,13 @@
      <ID>learninghub</ID>
      <Node Name="GADGET_USAGE" SimpleFormat="true">
       <Item Index="000001" SimpleFormat="true">
-       <USAGE_ID Final="5 ">E2T6MYN99IT9TBS0P8FJNXDXB</USAGE_ID>
+       <USAGE_ID Final="5 ">E2T6MYN99IT9TEVB9BUBUSZ1K</USAGE_ID>
+      </Item>
+      <Item Index="000002" SimpleFormat="true">
+       <USAGE_ID Final="5 ">E2T6MYN99IT9TEVB9D0FWJKH4</USAGE_ID>
+      </Item>
+      <Item Index="000003" SimpleFormat="true">
+       <USAGE_ID Final="5 ">E2T6MYN99IT9TEVB9D0FWKZ1K</USAGE_ID>
       </Item>
      </Node>
     </Item>

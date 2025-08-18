@@ -7,7 +7,7 @@
      <ID>learninghub</ID>
      <TITLE Transl="true">1</TITLE>
      <CATALOG_ID>/UI2/FLPD_CATALOG</CATALOG_ID>
-     <LAYOUT>{&quot;order&quot;:[&quot;E2T6MYN99IT9TBS0P8FJNXDXB&quot;],&quot;linkOrder&quot;:[]}</LAYOUT>
+     <LAYOUT>{&quot;order&quot;:[&quot;E2T6MYN99IT9TEVB9BUBUSZ1K&quot;],&quot;linkOrder&quot;:[]}</LAYOUT>
      <ORIGINAL_LANGUAGE>en</ORIGINAL_LANGUAGE>
      <IS_CATALOG_PAGE/>
      <IS_PERS_LOCKED/>
@@ -15,13 +15,13 @@
      <Node Name="EDM_P_HEADER" SimpleFormat="true">
       <Item Index="000001" SimpleFormat="true">
        <NAME Final="5 ">CONF_TIMESTAMP</NAME>
-       <VALUE>20250627115854</VALUE>
+       <VALUE>20250724104341</VALUE>
       </Item>
      </Node>
      <Node Name="GADGET_USAGE" SimpleFormat="true">
       <Item Index="000001" SimpleFormat="true">
-       <USAGE_ID Final="5 ">E2T6MYN99IT9TBS0P8FJNXDXB</USAGE_ID>
-       <GADGET_ID>X-SAP-UI2-PAGE:X-SAP-UI2-CATALOGPAGE:LearningHub:E2T6MYN99IT9TBS0IYXQB50ZP</GADGET_ID>
+       <USAGE_ID Final="5 ">E2T6MYN99IT9TEVB9BUBUSZ1K</USAGE_ID>
+       <GADGET_ID>X-SAP-UI2-PAGE:X-SAP-UI2-CATALOGPAGE:learninghub:E2T6MYN99IT9TEVB04R1HPB5M</GADGET_ID>
        <TITLE Transl="true"/>
        <CONFIGURATION/>
        <LAYOUT_DATA/>
@@ -32,7 +32,41 @@
        <Node Name="EDM_GU_HEADER" SimpleFormat="true">
         <Item Index="000001" SimpleFormat="true">
          <NAME Final="5 ">CONF_TIMESTAMP</NAME>
-         <VALUE>20250627115853</VALUE>
+         <VALUE>20250724104338</VALUE>
+        </Item>
+       </Node>
+      </Item>
+      <Item Index="000002" SimpleFormat="true">
+       <USAGE_ID Final="5 ">E2T6MYN99IT9TEVB9D0FWJKH4</USAGE_ID>
+       <GADGET_ID>X-SAP-UI2-PAGE:X-SAP-UI2-CATALOGPAGE:learninghub:E2T6MYN99IT9TEVB17GDV3MX2</GADGET_ID>
+       <TITLE Transl="true"/>
+       <CONFIGURATION/>
+       <LAYOUT_DATA/>
+       <REMOTE_CATALOG_ID/>
+       <REF_PAGE_ID/>
+       <REF_USAGE_ID/>
+       <IS_READ_ONLY/>
+       <Node Name="EDM_GU_HEADER" SimpleFormat="true">
+        <Item Index="000001" SimpleFormat="true">
+         <NAME Final="5 ">CONF_TIMESTAMP</NAME>
+         <VALUE>20250724104339</VALUE>
+        </Item>
+       </Node>
+      </Item>
+      <Item Index="000003" SimpleFormat="true">
+       <USAGE_ID Final="5 ">E2T6MYN99IT9TEVB9D0FWKZ1K</USAGE_ID>
+       <GADGET_ID>X-SAP-UI2-PAGE:X-SAP-UI2-CATALOGPAGE:learninghub:E2T6MYN99IT9TEVB2E2OU4MOP</GADGET_ID>
+       <TITLE Transl="true"/>
+       <CONFIGURATION/>
+       <LAYOUT_DATA/>
+       <REMOTE_CATALOG_ID/>
+       <REF_PAGE_ID/>
+       <REF_USAGE_ID/>
+       <IS_READ_ONLY/>
+       <Node Name="EDM_GU_HEADER" SimpleFormat="true">
+        <Item Index="000001" SimpleFormat="true">
+         <NAME Final="5 ">CONF_TIMESTAMP</NAME>
+         <VALUE>20250724104340</VALUE>
         </Item>
        </Node>
       </Item>
