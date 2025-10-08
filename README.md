@@ -35,25 +35,8 @@ This project is part of the *Personal Growth Apps* series — a set of small, re
 
 ## 📷 Screenshots
 
-Below you can find an overview of the apps:
+Can be found in following blog posts:
 
-![image.png](attachment:b1bf9b33-1259-43fc-a120-3354e61d396e:image.png)
-
-- 📘 **Learning Hub** — course catalog (DB + BO scheme)
-    
-    ![image.png](attachment:7a8d70ed-3029-484c-995a-8017b1fc28a2:image.png)
-    
-    ![image.png](attachment:e74c7cb2-a935-40a1-8675-569994d6242e:image.png)
-    
-- 🎓 **My Courses** — user learning management (DB + BO scheme)
-    
-    ![image.png](attachment:b63bb4d6-a6fc-4723-9f5b-8191d9d987ab:image.png)
-    
-    ![image.png](attachment:dfe5460f-f073-4a0f-af29-cb5846e349db:image.png)
-    
-- 📊 **Analytics Page** — visual overview of progress
-  
-    ![image.png](attachment:8082d657-3060-465f-ba5d-1d15870124db:image.png)
 
 ## 🔗 Author
 
