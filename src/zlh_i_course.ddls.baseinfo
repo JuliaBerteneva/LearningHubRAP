@@ -6,7 +6,9 @@
 "ZLH_COURSE"
 ],
 "ASSOCIATED":
-[],
+[
+"ZLH_I_MODERATOR_INFO"
+],
 "BASE":
 [],
 "ANNO_REF":

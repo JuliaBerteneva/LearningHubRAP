@@ -16,6 +16,7 @@ association to ZLH_I_STATUS_VH as _status on _status.Value = $projection.Status
     Percent,
     Userid,
     Name,
+    Type,
     Moderator,
     Duration,
     @Consumption.valueHelpDefinition: [{ entity : { name : 'zlh_i_status_vh', element : 'Description' } } ]

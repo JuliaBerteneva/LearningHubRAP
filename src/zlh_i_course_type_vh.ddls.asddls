@@ -2,7 +2,7 @@
 @EndUserText.label: 'Material Type Value Help'
 @Metadata.ignorePropagatedAnnotations: true
 @ObjectModel.resultSet.sizeCategory: #XS
-define view entity zlh_i_type_vh as select from dd07l as l
+define view entity ZLH_I_course_TYPE_VH as select from dd07l as l
     inner join dd07t as t on t.domname = l.domname and
                              t.as4local = l.as4local and
                              t.valpos = l.valpos and
@@ -13,5 +13,5 @@ define view entity zlh_i_type_vh as select from dd07l as l
   @Semantics.text: true
   t.ddtext as Description
 }
-where l.domname = 'ZLH_MATERIAL_TYPE'
+where l.domname = 'ZLH_COURSE_TYPE'
   and t.ddlanguage = $session.system_language

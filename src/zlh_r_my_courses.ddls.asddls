@@ -17,6 +17,8 @@ define root view entity zlh_r_my_courses
   key Userid,
       Moderator,
       Name,
+      Type,
+      SkillCategory,
       Duration,
       @Consumption.valueHelpDefinition: [{ entity : { name : 'zlh_i_status_vh', element : 'Value' } } ]
       @ObjectModel.text.association: '_status'

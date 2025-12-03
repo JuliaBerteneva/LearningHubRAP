@@ -3,9 +3,9 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DDLS>
-    <DDLNAME>ZLH_I_STATUS_VH</DDLNAME>
+    <DDLNAME>ZLH_I_SKILL_CATEGORY_VH</DDLNAME>
     <DDLANGUAGE>E</DDLANGUAGE>
-    <DDTEXT>Material Type Value Help</DDTEXT>
+    <DDTEXT>Skill Category Value Help</DDTEXT>
     <SOURCE_TYPE>W</SOURCE_TYPE>
    </DDLS>
   </asx:values>

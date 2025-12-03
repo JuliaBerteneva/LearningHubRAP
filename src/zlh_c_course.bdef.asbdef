@@ -1,6 +1,7 @@
 projection;
 strict ( 2 );
 use draft;
+use side effects;
 
 define behavior for zlh_c_course alias Course
 {
@@ -9,6 +10,7 @@ define behavior for zlh_c_course alias Course
   use delete;
 
   use action assignMeToCourse;
+  use action releaseCourse;
 
   use action Resume;
   use action Edit;

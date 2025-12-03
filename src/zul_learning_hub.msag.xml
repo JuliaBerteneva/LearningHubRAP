@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZUL_LEARNING_HUB</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+    <STEXT>Learning Hub Messages</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZUL_LEARNING_HUB</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>Duration of the Material is to long</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZUL_LEARNING_HUB</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Only Moderator can make changes</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZUL_LEARNING_HUB</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Add at least one material</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

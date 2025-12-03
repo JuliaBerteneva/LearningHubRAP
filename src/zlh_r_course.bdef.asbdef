@@ -7,40 +7,57 @@ persistent table zlh_course
 draft table zlh_course_d
 lock master
 total etag LastChangedAt
-authorization master (global)
+authorization master ( global )
 etag master LocalLastChangedAt
 {
-  create( features : global );
-  update( features : global );
-  delete( features : global );
+  create ( features : global );
+  update ( features : global );
+  delete ( features : global );
 
-  field (readonly, numbering : managed) CourseId;
-  field (readonly)LastChangedAt, LocalCreatedBy, LocalCreatedAt, LocalLastChangedAt, LocalLastChangedBy, Duration;
+  field ( readonly, numbering : managed ) CourseId;
+  field ( features : instance ) CourseKey, Name;
+  field ( readonly ) LastChangedAt, LocalCreatedBy, LocalCreatedAt, LocalLastChangedAt, LocalLastChangedBy, Duration;
 
+  side effects
+  { field Released affects permissions ( field _materials.Name, field _materials.Type, field _materials.Content ), $self;
+    action releaseCourse affects field Released, $self;
+    field SkillCategory affects entity _materials; }
 
-  action assignMeToCourse;
+  action ( features : instance ) assignMeToCourse;
+  action ( features : instance ) releaseCourse;
   internal action recalcDuration;
 
-  association _materials { create; with draft;}
-  mapping for zlh_course corresponding{
-    CourseId = course_id;
-    CourseKey = course_key;
-    Name = name;
-    Moderator = moderator;
-    Duration = duration;
-    LocalCreatedAt = local_created_at;
-    LocalCreatedBy = local_created_by;
-    LocalLastChangedAt = local_last_changed_at;
-    LocalLastChangedBy = local_last_changed_by;
-    LastChangedAt = last_changed_at;
-  }
+  validation checkMaterailsEmpty on save{ create; update; }
+
+  determination refreshMaterials on modify { field Type, SkillCategory; }
+
+  association _materials { create ( features : instance ); with draft; }
+  mapping for zlh_course corresponding
+    {
+      CourseId           = course_id;
+      CourseKey          = course_key;
+      Name               = name;
+      Type               = type;
+      SkillCategory      = skill_category;
+      Moderator          = moderator;
+      Duration           = duration;
+      Released           = released;
+      LocalCreatedAt     = local_created_at;
+      LocalCreatedBy     = local_created_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LocalLastChangedBy = local_last_changed_by;
+      LastChangedAt      = last_changed_at;
+    }
 
   draft action Resume;
   draft action Edit;
   draft action Activate optimized;
   draft action Discard;
-  draft determine action Prepare{
-    }
+  draft determine action Prepare
+  {
+    validation Material~checkDuration;
+    validation ( always ) checkMaterailsEmpty;
+  }
 }
 
 define behavior for zlh_r_material alias Material
@@ -54,20 +71,27 @@ etag master LastChangedAt
   delete;
 
   field ( readonly, numbering : managed ) MaterialId;
-  field (readonly) CourseId, LastChangedAt;
+  field ( readonly ) CourseId, LastChangedAt;
+
+  field ( features : instance ) Name, Type, Content;
 
   association _course { with draft; }
+  side effects
+  { field Duration affects $self; }
+
+  validation checkDuration on save { create; update; field Duration; }
 
   determination calcDuration on save { create; update; }
 
-  mapping for zlh_material corresponding{
-    CourseId = course_id;
-    MaterialId = material_id;
-    MaterialKey = material_key;
-    Type = type;
-    Name = name;
-    Duration = duration;
-    Content = content;
-    LastChangedAt = last_changed_at;
-  }
+  mapping for zlh_material corresponding
+    {
+      CourseId      = course_id;
+      MaterialId    = material_id;
+      MaterialKey   = material_key;
+      Type          = type;
+      Name          = name;
+      Duration      = duration;
+      Content       = content;
+      LastChangedAt = last_changed_at;
+    }
 }

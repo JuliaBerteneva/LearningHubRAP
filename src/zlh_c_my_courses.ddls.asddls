@@ -9,6 +9,8 @@ define root view entity zlh_c_my_courses
   key CourseId,
   key Userid,
       Name,
+      Type,
+      SkillCategory,
       Duration,
       Status,
       Percentage,

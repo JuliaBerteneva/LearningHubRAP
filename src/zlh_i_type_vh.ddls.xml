@@ -6,7 +6,7 @@
     <DDLNAME>ZLH_I_TYPE_VH</DDLNAME>
     <DDLANGUAGE>E</DDLANGUAGE>
     <DDTEXT>Material Type Value Help</DDTEXT>
-    <SOURCE_TYPE>V</SOURCE_TYPE>
+    <SOURCE_TYPE>W</SOURCE_TYPE>
    </DDLS>
   </asx:values>
  </asx:abap>

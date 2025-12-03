@@ -47,7 +47,7 @@ etag master LastChangedAt
   field ( readonly ) CourseId;
   field ( readonly : update ) MaterialId, UserId;
 
-  action (features: instance)changeStatusMaterial  parameter zlh_a_status ;
+  action (features : instance)changeStatusMaterial  parameter zlh_a_status ;
   action (features : instance) markAsFinished;
 
   determination calculatePercentage on save { create; update; }

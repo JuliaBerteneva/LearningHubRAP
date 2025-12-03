@@ -13,6 +13,8 @@ as select from zlh_i_user_course as user
     Percent,
     user.Userid,
     user.Name,
+    user.Type,
+    user.SkillCategory,
     user.Moderator,
     user.Duration,
     user.StartDate,

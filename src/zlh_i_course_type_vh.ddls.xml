@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DDLS>
-    <DDLNAME>ZLH_I_STATUS_VH</DDLNAME>
+    <DDLNAME>ZLH_I_COURSE_TYPE_VH</DDLNAME>
     <DDLANGUAGE>E</DDLANGUAGE>
     <DDTEXT>Material Type Value Help</DDTEXT>
     <SOURCE_TYPE>W</SOURCE_TYPE>

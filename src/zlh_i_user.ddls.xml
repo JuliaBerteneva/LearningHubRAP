@@ -5,7 +5,7 @@
    <DDLS>
     <DDLNAME>ZLH_I_USER</DDLNAME>
     <DDLANGUAGE>E</DDLANGUAGE>
-    <DDTEXT>My information</DDTEXT>
+    <DDTEXT>User information</DDTEXT>
     <SOURCE_TYPE>V</SOURCE_TYPE>
    </DDLS>
   </asx:values>

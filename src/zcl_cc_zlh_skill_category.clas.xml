@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_CC_ZLH_SKILL_CATEGORY</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>Constants from ZLH_SKILL_CATEGORY domain</DESCRIPT>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>GC_HARD</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Hard Skill</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GC_SOFT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Sorf Skill</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

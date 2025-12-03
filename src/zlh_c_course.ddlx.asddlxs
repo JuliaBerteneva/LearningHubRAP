@@ -1,101 +1,143 @@
 @Metadata.layer: #CUSTOMER
-annotate entity zlh_c_course
-    with 
+annotate entity zlh_c_course with
 {
-    @UI.facet: [
-      {
-           id:'Header',
-           purpose: #HEADER,
-           type: #FIELDGROUP_REFERENCE,
-           targetQualifier: 'Header',
-           label: 'Course'
-      },
-      {
-           id:'Main',
-           type: #FIELDGROUP_REFERENCE,
-           position: 10,
-           targetQualifier: 'Course',
-           label: 'Main Information'
-      },
-      {    
-           id:'MaterialsData',
-           type: #LINEITEM_REFERENCE,
-           targetElement: '_materials',
-           position: 20,
-           label: 'Materials'
-      }
-      ]
-    @ UI: {
-      lineItem: [
-          { type: #FOR_ACTION, dataAction: 'assignMeToCourse', label: 'Assign Me', position: 10 }
-        ],
-      fieldGroup: [{ qualifier: 'Course',
-                     position: 1 }],
-      hidden: true }
-    @UI.identification: [ {type: #FOR_ACTION, dataAction: 'assignMeToCourse', label: 'Assign Me' } ]
-    CourseId;
-    @ UI: {
-      fieldGroup: [{ qualifier: 'Course',
-                     position: 2 }] 
-      }
-    CourseKey;
-    @ UI: {
-      lineItem: [{ position: 1,
-                   label: 'Course Name',
-                   importance: #HIGH  }],
-      fieldGroup: [{ qualifier: 'Course',
-                     position: 3 },
-                   { qualifier: 'Header',
-                     position: 1 },
-                   { qualifier : 'Name' }]
-      }
-    Name;
-    @ UI: {
-      lineItem: [{ position: 3,
-                   label: 'Moderator',
-                   importance: #HIGH  }],
-      fieldGroup: [{ qualifier: 'Course',
-                     position: 4 }] 
-      }
-    Moderator;
-    @ UI: {
-      lineItem: [{ position: 2,
-                   label: 'Duration',
-                   importance: #HIGH  }],
-      fieldGroup: [{ qualifier: 'Course',
-                     position: 5 },
-                   { qualifier: 'Header',
-                     position: 2 }] 
-      }
-    Duration;
-    @ UI: {
-      lineItem: [{hidden: true}],
-      fieldGroup: [{ qualifier: 'Course',
-                     position: 6 }] 
-      }
-    LocalCreatedAt;
-    @ UI: {
-      lineItem: [{hidden: true}],
-      fieldGroup: [{ qualifier: 'Course',
-                     position: 7 }] 
-      }
-    LocalCreatedBy;
-    @ UI: {
-      lineItem: [{hidden: true}],
-      fieldGroup: [{ qualifier: 'Course',
-                     hidden: true }] 
-      }
-    LocalLastChangedAt;
-    @ UI: {
-      lineItem: [{hidden: true}],
-      fieldGroup: [{ qualifier: 'Course' ,
-                     hidden: true}] 
-      }
-    LocalLastChangedBy;
-    @ UI: {
-      lineItem: [{hidden: true}],
-      fieldGroup: [{ qualifier: 'Course',
-                     hidden: true}] 
-      }
-    LastChangedAt;
+  @UI.facet: [
+    {
+         id:'Header',
+         purpose: #HEADER,
+         type: #FIELDGROUP_REFERENCE,
+         targetQualifier: 'Header',
+         label: 'Course'
+    },
+    {
+         id:'Main',
+         type: #FIELDGROUP_REFERENCE,
+         position: 10,
+         targetQualifier: 'Course',
+         label: 'Main Information'
+    },
+    {
+         id:'MaterialsData',
+         type: #LINEITEM_REFERENCE,
+         targetElement: '_materials',
+         position: 20,
+         label: 'Materials'
+    }
+    ]
+  @ UI: {
+    lineItem: [
+        { type: #FOR_ACTION, dataAction: 'assignMeToCourse', label: 'Assign Me', position: 10 },
+        { type: #FOR_ACTION, dataAction: 'releaseCourse', label: 'Release Course', position: 10 }
+      ],
+    fieldGroup: [{ qualifier: 'Course',
+                   position: 1 }],
+    hidden: true }
+  @UI.identification: [ {type: #FOR_ACTION, dataAction: 'assignMeToCourse', label: 'Assign Me' },
+                        {type: #FOR_ACTION, dataAction: 'releaseCourse', label: 'Release Course' } ]
+  CourseId;
+  @ UI: {
+    fieldGroup: [{ qualifier: 'Course',
+                   position: 2 }]
+    }
+  CourseKey;
+  @ UI: {
+    lineItem: [{ position: 1,
+                 label: 'Course Name',
+                 importance: #HIGH  }],
+    fieldGroup: [{ qualifier: 'Course',
+                   position: 3 },
+                 { qualifier: 'Header',
+                   position: 3 },
+                 { qualifier : 'Name' }]
+    }
+  Name;
+  @ UI: {
+    lineItem: [{ position: 3,
+                 importance: #HIGH ,
+                 label: 'Type'}],
+    fieldGroup: [{ qualifier: 'Course',
+                   position: 6 },
+                 { qualifier: 'Header',
+                   position: 1 }]
+    }
+  Type;
+  @ UI: {
+    lineItem: [{ position: 2,
+                 importance: #HIGH ,
+                 label: 'Skill Category'}],
+    fieldGroup: [{ qualifier: 'Course',
+                   position: 7 },
+                 { qualifier: 'Header',
+                   position: 2 }]
+    }
+  SkillCategory;
+  @ UI: {
+    lineItem: [{ position: 3,
+                 label: 'Moderator',
+                 importance: #HIGH  }],
+    fieldGroup: [{ qualifier: 'Course',
+                   position: 4 }]
+    }
+  Moderator;
+  @ UI: {
+    lineItem: [{ position: 4,
+                 label: 'Duration',
+                 importance: #HIGH  }],
+    fieldGroup: [{ qualifier: 'Course',
+                   position: 5 },
+                 { qualifier: 'Header',
+                   position: 5 }]
+    }
+  Duration;
+  @ UI: {
+    lineItem: [{ position: 5,
+                 label: 'Course Released',
+                 importance: #HIGH
+                   }],
+    fieldGroup: [{ qualifier: 'Course',
+                   position: 5 },
+                 { qualifier: 'Header',
+                   position: 4 }]
+    }
+  Released;
+  @ UI: {
+    hidden: true
+    }
+  ModeratorName;
+  @ UI: {
+    hidden: true
+    }
+  ChangedByName;
+  @ UI: {
+    hidden: true
+    }
+  CreatedByName;
+  @ UI: {
+    hidden: true
+    }
+  SkillCategoryDescription;
+  @ UI: {
+    hidden: true
+    }
+  TypeDescription;
+  @ UI: {
+    hidden: true
+    }
+  LocalCreatedAt;
+  @ UI: {
+    hidden: true
+    }
+  LocalCreatedBy;
+  @ UI: {
+    hidden: true
+    }
+  LocalLastChangedAt;
+  @ UI: {
+    hidden: true
+    }
+  LocalLastChangedBy;
+  @ UI: {
+    hidden: true
+    }
+  LastChangedAt;
 }
