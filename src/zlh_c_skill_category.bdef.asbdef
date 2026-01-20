@@ -1,0 +1,23 @@
+projection implementation in class zbp_lh_c_skill_category unique;
+strict ( 2 );
+use draft;
+
+define behavior for zlh_c_skill_category alias Category
+{
+  use create( augment );
+  use update( augment );
+  use delete;
+  field ( modify ) Name;
+  use association _text { create; with draft; }
+  use action Resume;
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Prepare;
+}
+define behavior for ZLH_c_SKILL_CATEGORY_TEXT alias Text
+{
+  use update;
+  use delete;
+  use association _category { with draft; }
+}

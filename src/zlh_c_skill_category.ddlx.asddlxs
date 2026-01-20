@@ -1,0 +1,46 @@
+@Metadata.layer: #CUSTOMER
+annotate entity zlh_c_skill_category with
+{
+  @UI.facet: [
+  {
+       id:'Category',
+       type: #FIELDGROUP_REFERENCE,
+                  purpose:         #STANDARD,
+       position: 10,
+       targetQualifier: 'Category',
+       label: 'Category'
+  }
+    ]
+  @ UI: {
+  lineItem: [{ position: 1,
+               importance: #HIGH ,
+               label: 'Category Id'}],
+  fieldGroup: [{ qualifier: 'Category',
+                 position: 1 }]
+  }
+  CategoryId;
+  @ UI: {
+  lineItem: [{ position: 2,
+               importance: #HIGH ,
+               label: 'Category Key' }],
+  fieldGroup: [{ qualifier: 'Category',
+                 position: 2 }]
+  }
+  CategoryKey;
+  @ UI: {
+  lineItem: [{ position: 3,
+               importance: #HIGH ,
+               label: 'Category Name' }],
+  fieldGroup: [{ qualifier: 'Category',
+                 position: 3 }]
+  }
+  Name;
+  @ UI: {hidden:true}
+  CreatedBy;
+  @ UI: {hidden:true}
+  CretedAt;
+  @ UI: {hidden:true}
+  LastChangedBy;
+  @ UI: {hidden:true}
+  LastChangedAt;
+}

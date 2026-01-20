@@ -1,0 +1,65 @@
+managed implementation in class zbp_lh_r_skill_category unique;
+strict ( 2 );
+with draft;
+
+define behavior for zlh_r_skill_category alias Category with additional save
+persistent table zlh_skill_categ
+draft table zlh_skill_ctegd
+lock master
+total etag LastChangedAt
+authorization master ( instance )
+etag master LastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  field ( readonly, numbering : managed ) CategoryId ;
+  field ( readonly ) CreatedBy, CretedAt, LastChangedAt, LastChangedBy;
+
+  draft action Resume;
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft determine action Prepare
+  {
+  }
+
+  association _text { create; with draft; }
+  mapping for zlh_skill_categ corresponding
+    {
+      CategoryId    = category_id;
+      CategoryKey = category_key;
+      CreatedBy     = created_by;
+      CretedAt      = created_at;
+      LastChangedBy = last_changed_by;
+      LastChangedAt = last_changed_at;
+    }
+}
+define behavior for ZLH_R_SKILL_CATEGORY_TEXT alias Text
+persistent table zlh_skill_categt
+draft table zlh_skill_ctegtd
+lock dependent by _category
+authorization dependent by _category
+etag master LastChangedAt
+{
+  update;
+  delete;
+
+  field ( readonly ) CategoryId;
+  field ( readonly ) Language;
+  field ( readonly ) CreatedBy, CretedAt, LastChangedAt, LastChangedBy;
+
+  association _category { with draft; }
+
+  mapping for zlh_skill_categt corresponding
+    {
+      CategoryId    = category_id;
+      CategoryKey = category_key;
+      Name          = name;
+      CreatedBy     = created_by;
+      CretedAt      = created_at;
+      LastChangedBy = last_changed_by;
+      LastChangedAt = last_changed_at;
+    }
+}

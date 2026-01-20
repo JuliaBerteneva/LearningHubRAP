@@ -70,7 +70,8 @@ CLASS lhc_course IMPLEMENTATION.
         ENTITY course
         FIELDS ( courseid duration )
         WITH CORRESPONDING #( keys )
-        RESULT DATA(courses).
+        RESULT DATA(courses)
+         FAILED failed.
 
     READ ENTITIES OF zlh_r_course IN LOCAL MODE
         ENTITY course BY \_materials
@@ -100,7 +101,8 @@ CLASS lhc_course IMPLEMENTATION.
       ENTITY course
       FIELDS ( courseid )
       WITH CORRESPONDING #( keys )
-      RESULT DATA(courses).
+      RESULT DATA(courses)
+         FAILED failed.
 
     READ ENTITIES OF zlh_r_course IN LOCAL MODE
       ENTITY course BY \_materials
@@ -109,16 +111,16 @@ CLASS lhc_course IMPLEMENTATION.
      LINK DATA(material_links)
      RESULT DATA(materials).
     LOOP AT courses ASSIGNING FIELD-SYMBOL(<course>).
-      APPEND VALUE #( userid     = sy-uname
+      INSERT VALUE #( userid     = sy-uname
                       courseid   = <course>-courseid
                       status     = zcl_cc_zlh_status=>gc_inprocess
-                      start_date = sy-datum ) TO course_connections.
+                      start_date = sy-datum ) INTO TABLE course_connections.
       LOOP AT materials ASSIGNING FIELD-SYMBOL(<material>).
-        APPEND VALUE #( userid     = sy-uname
+        INSERT VALUE #( userid     = sy-uname
                         materialid = <material>-materialid
                         courseid   = <course>-courseid
                         status     = zcl_cc_zlh_status=>gc_notstarted
-                        start_date = sy-datum ) TO material_connections.
+                        start_date = sy-datum ) INTO TABLE material_connections.
       ENDLOOP.
     ENDLOOP.
     IF course_connections IS NOT INITIAL.
@@ -151,8 +153,7 @@ CLASS lhc_course IMPLEMENTATION.
     LOOP AT courses ASSIGNING FIELD-SYMBOL(<course>).
       IF keys[ courseid = <course>-courseid ]-%is_draft = if_abap_behv=>mk-on.
         LOOP AT material_links ASSIGNING FIELD-SYMBOL(<link>) WHERE target-courseid = <course>-courseid.
-          APPEND INITIAL LINE TO materials_id ASSIGNING FIELD-SYMBOL(<material>).
-          <material> = CORRESPONDING #( <link>-target ).
+          INSERT CORRESPONDING #( <link>-target ) INTO TABLE materials_id.
         ENDLOOP.
         result = VALUE #( BASE result FOR material IN materials_id
                           ( %tky             = material-%tky
@@ -213,13 +214,13 @@ CLASS lhc_course IMPLEMENTATION.
      RESULT DATA(materials).
 
     LOOP AT materials ASSIGNING FIELD-SYMBOL(<material>).
-      APPEND VALUE #( %tky        = <material>-%tky
+      INSERT VALUE #( %tky        = <material>-%tky
                       %state_area = 'CHECK_DURATION'
-                    ) TO reported-material.
-      IF <material>-duration > 100.
-        APPEND VALUE #( %tky        = <material>-%tky
-                        %fail-cause = if_abap_behv=>cause-not_found ) TO failed-material.
-        APPEND VALUE #( %tky              = <material>-%tky
+                    ) INTO TABLE reported-material.
+      IF <material>-duration > 100.                       "#EC CI_MAGIC
+        INSERT VALUE #( %tky        = <material>-%tky
+                        %fail-cause = if_abap_behv=>cause-not_found ) INTO TABLE failed-material.
+        INSERT VALUE #( %tky              = <material>-%tky
                         %state_area       = 'CHECK_DURATION'
                         %msg              = me->new_message( id        = 'ZUL_LEARNING_HUB'
                                                              number    = '000'
@@ -227,7 +228,7 @@ CLASS lhc_course IMPLEMENTATION.
                         %element-duration = if_abap_behv=>mk-on
                         %path-course      = VALUE #(         %is_draft = <material>-%is_draft
                                                              courseid  = <material>-courseid )
-                      ) TO reported-material.
+                      ) INTO TABLE reported-material.
       ENDIF.
     ENDLOOP.
   ENDMETHOD.
@@ -265,18 +266,18 @@ CLASS lhc_course IMPLEMENTATION.
      RESULT DATA(materials).
 
     LOOP AT courses ASSIGNING FIELD-SYMBOL(<course>).
-      APPEND VALUE #( %tky        = <course>-%tky
+      INSERT VALUE #( %tky        = <course>-%tky
                       %state_area = 'CHECK_MATERIAL_EXISTS'
-                    ) TO reported-course.
+                    ) INTO TABLE reported-course.
       IF materials IS INITIAL.
-        APPEND VALUE #( %tky        = <course>-%tky
-                        %fail-cause = if_abap_behv=>cause-not_found ) TO failed-course.
-        APPEND VALUE #( %tky        = <course>-%tky
+        INSERT VALUE #( %tky        = <course>-%tky
+                        %fail-cause = if_abap_behv=>cause-not_found ) INTO TABLE failed-course.
+        INSERT VALUE #( %tky        = <course>-%tky
                         %state_area = 'CHECK_MATERIAL_EXISTS'
                         %msg        = me->new_message( id       = 'ZUL_LEARNING_HUB'
                                                        number   = '002'
                                                        severity = ms-error )
-                      ) TO reported-course.
+                      ) INTO TABLE reported-course.
       ENDIF.
     ENDLOOP.
 
@@ -314,8 +315,7 @@ CLASS lhc_course IMPLEMENTATION.
             OR <course>-skillcategory <> lt_db[ course_id = <course>-courseid ]-skill_category AND lt_db[ course_id = <course>-courseid ]-skill_category IS NOT INITIAL ) .
 
           LOOP AT material_links ASSIGNING FIELD-SYMBOL(<link>) WHERE target-courseid = <course>-courseid.
-            APPEND INITIAL LINE TO materials_id ASSIGNING FIELD-SYMBOL(<material>).
-            <material> = CORRESPONDING #( <link>-target ).
+            INSERT CORRESPONDING #( <link>-target ) INTO TABLE materials_id.
           ENDLOOP.
 
         ENDIF.

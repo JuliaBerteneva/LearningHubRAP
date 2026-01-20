@@ -5,6 +5,7 @@ use side effects;
 define behavior for zlh_c_my_courses alias Course
 {
   use action changeStatus;
+  use action deleteMe;
   use association _materials;
 }
 

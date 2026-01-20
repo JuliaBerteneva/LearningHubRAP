@@ -30,7 +30,8 @@ annotate entity zlh_c_my_courses with
                  hidden: true  }],
     fieldGroup: [{ qualifier: 'CourseInfo',
                    position: 1 },
-    {type: #FOR_ACTION, dataAction: 'changeStatus', label: 'Change Status', position: 10 }],
+    {type: #FOR_ACTION, dataAction: 'changeStatus', label: 'Change Status', position: 10 },
+    {type: #FOR_ACTION, dataAction: 'deleteMe', label: 'Exclude Me form Course', position: 20 }],
     hidden: true }
                    
   CourseId;
@@ -59,12 +60,11 @@ annotate entity zlh_c_my_courses with
   @EndUserText.label: 'Status'
   Status;
   @ UI: {
-    fieldGroup: [{ qualifier: 'CourseInfo',
-                   position: 5}],
     dataPoint: { visualization: #PROGRESS,
                  qualifier: 'Percentage',
                  targetValue: 100 },
-    lineItem: [ { hidden: true } ]
+    lineItem: [ { hidden: true } ],
+    hidden: true
     }
   Percentage;
   @ UI: {

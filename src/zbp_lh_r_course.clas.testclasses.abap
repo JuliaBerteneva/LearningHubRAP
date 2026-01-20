@@ -13,67 +13,67 @@ CLASS ltcl_course DEFINITION FINAL FOR TESTING
     METHODS:
       setup,
       teardown,
-      calcDuration FOR TESTING,
-      assignMeToCourse FOR TESTING,
-      recalcDuration FOR TESTING,
+      calcduration FOR TESTING,
+      assignmetocourse FOR TESTING,
+      recalcduration FOR TESTING,
       get_features_global FOR TESTING.
 
-    DATA: lo_handler       TYPE REF TO lhc_Course,
-          lt_course_mock   TYPE TABLE OF zlh_i_course,
-          lt_material_mock TYPE TABLE OF zlh_i_material.
+    DATA lo_handler       TYPE REF TO lhc_course.
+    DATA lt_course_mock   TYPE TABLE OF zlh_i_course.
+    DATA lt_material_mock TYPE TABLE OF zlh_i_material.
 ENDCLASS.
 
 
 CLASS ltcl_course IMPLEMENTATION.
 
-  METHOD calcDuration.
-    lt_course_mock = VALUE #( ( CourseId = '1'
-                                CourseKey = 'Test'
-                                Name = 'Test course'
-                                Moderator = 'ULOPINA' ) ).
+  METHOD calcduration.
+    lt_course_mock = VALUE #( ( courseid  = '1'
+                                coursekey = 'Test'
+                                name      = 'Test course'
+                                moderator = 'ULOPINA' ) ).
     lo_environment->insert_test_data( lt_course_mock ).
 
-    lt_material_mock = VALUE #( ( CourseId = '1'
-                                  MaterialId = '1'
-                                  Name = 'Material1'
-                                  Duration = 10 )
-                                ( CourseId = '1'
-                                  MaterialId = '21'
-                                  Name = 'Material21'
-                                  Duration = 20 ) ).
+    lt_material_mock = VALUE #( ( courseid   = '1'
+                                  materialid = '1'
+                                  name       = 'Material1'
+                                  duration   = 10 )
+                                ( courseid   = '1'
+                                  materialid = '21'
+                                  name       = 'Material21'
+                                  duration   = 20 ) ).
     lo_environment->insert_test_data( lt_material_mock ).
 
-    lo_handler->calcDuration( EXPORTING keys = CORRESPONDING #( lt_material_mock ) ).
+    lo_handler->calcduration( keys = CORRESPONDING #( lt_material_mock ) ).
 
     READ ENTITIES OF zlh_r_course
-        ENTITY Course
+        ENTITY course
         ALL FIELDS WITH CORRESPONDING #( lt_course_mock )
         RESULT DATA(lt_result).
 
-    cl_abap_unit_assert=>assert_equals( msg = 'Course duration is not correct' exp = 30 act = lt_result[ 1 ]-Duration ).
+    cl_abap_unit_assert=>assert_equals( msg = 'Course duration is not correct' exp = 30 act = lt_result[ 1 ]-duration ).
   ENDMETHOD.
 
-  METHOD assignMeToCourse.
-    lt_course_mock = VALUE #( ( CourseId = '1'
-                                  CourseKey = 'Test'
-                                  Name = 'Test course'
-                                  Moderator = 'ULOPINA' ) ).
+  METHOD assignmetocourse.
+    lt_course_mock = VALUE #( ( courseid  = '1'
+                                coursekey = 'Test'
+                                name      = 'Test course'
+                                moderator = 'ULOPINA' ) ).
     lo_environment->insert_test_data( lt_course_mock ).
-    lt_material_mock = VALUE #( ( CourseId = '1'
-                                  MaterialId = '1'
-                                  Name = 'Material1'
-                                  Duration = 10 )
-                                ( CourseId = '1'
-                                  MaterialId = '21'
-                                  Name = 'Material21'
-                                  Duration = 20 ) ).
+    lt_material_mock = VALUE #( ( courseid   = '1'
+                                  materialid = '1'
+                                  name       = 'Material1'
+                                  duration   = 10 )
+                                ( courseid   = '1'
+                                  materialid = '21'
+                                  name       = 'Material21'
+                                  duration   = 20 ) ).
     lo_environment->insert_test_data( lt_material_mock ).
-    lo_handler->assignmetocourse( EXPORTING keys = CORRESPONDING #( lt_course_mock ) ).
+    lo_handler->assignmetocourse( keys = CORRESPONDING #( lt_course_mock ) ).
     DATA(ls_course)  = lt_course_mock[ 1 ].
     SELECT * FROM zlh_user_course INTO TABLE @DATA(lt_user_course)
-    WHERE CourseId = @ls_course-CourseId.
+    WHERE courseid = @ls_course-courseid.
     SELECT * FROM zlh_user_mtrl INTO TABLE @DATA(lt_user_material)
-    WHERE CourseId = @ls_course-CourseId.
+    WHERE courseid = @ls_course-courseid.
 
     cl_abap_unit_assert=>assert_not_initial( msg = 'Course is not created in connection table' act = lt_user_course ).
     cl_abap_unit_assert=>assert_not_initial( msg = 'Material is not created in connection table' act = lt_user_material ).
@@ -90,49 +90,48 @@ CLASS ltcl_course IMPLEMENTATION.
 
   METHOD class_setup.
     lo_environment = cl_cds_test_environment=>create_for_multiple_cds( i_for_entities = VALUE #( ( i_for_entity = 'zlh_r_course' )
-                                                                                                 ( i_for_entity = 'zlh_r_material')
-                                                                                                ) ).
+                                                                                                 ( i_for_entity = 'zlh_r_material' )
+                                                                                               ) ).
     lo_environment_data_base = cl_osql_test_environment=>create( i_dependency_list = VALUE #( ( 'zlh_course_d' )
                                                                                               ( 'zlh_material_d' )
                                                                                               ( 'zlh_user_course' )
                                                                                               ( 'zlh_user_mtrl' ) ) ).
   ENDMETHOD.
 
-  METHOD recalcDuration.
-    lt_course_mock = VALUE #( ( CourseId = '1'
-                              CourseKey = 'Test'
-                              Name = 'Test course'
-                              Moderator = 'ULOPINA' ) ).
+  METHOD recalcduration.
+    lt_course_mock = VALUE #( ( courseid  = '1'
+                                coursekey = 'Test'
+                                name      = 'Test course'
+                                moderator = 'ULOPINA' ) ).
     lo_environment->insert_test_data( lt_course_mock ).
 
-    lt_material_mock = VALUE #( ( CourseId = '1'
-                                  MaterialId = '1'
-                                  Name = 'Material1'
-                                  Duration = 10 )
-                                ( CourseId = '1'
-                                  MaterialId = '21'
-                                  Name = 'Material21'
-                                  Duration = 20 ) ).
+    lt_material_mock = VALUE #( ( courseid   = '1'
+                                  materialid = '1'
+                                  name       = 'Material1'
+                                  duration   = 10 )
+                                ( courseid   = '1'
+                                  materialid = '21'
+                                  name       = 'Material21'
+                                  duration   = 20 ) ).
     lo_environment->insert_test_data( lt_material_mock ).
 
-    lo_handler->recalcDuration( EXPORTING keys = CORRESPONDING #( lt_course_mock ) ).
+    lo_handler->recalcduration( keys = CORRESPONDING #( lt_course_mock ) ).
 
     READ ENTITIES OF zlh_r_course
-        ENTITY Course
+        ENTITY course
         ALL FIELDS WITH CORRESPONDING #( lt_course_mock )
         RESULT DATA(lt_result).
 
-    cl_abap_unit_assert=>assert_equals( msg = 'Course duration is not correct' exp = 30 act = lt_result[ 1 ]-Duration ).
+    cl_abap_unit_assert=>assert_equals( msg = 'Course duration is not correct' exp = 30 act = lt_result[ 1 ]-duration ).
   ENDMETHOD.
 
   METHOD get_features_global.
-*    DATA request  TYPE STRUCTURE FOR GLOBAL FEATURES RESULT zlh_r_course.
     " Define a role with DISPLAY authorizations for authorization object S_DEVELOP.
     DATA(role_may_delete)  = VALUE cl_aunit_auth_check_types_def=>role_auth_objects(
-                                                             ( object = 'ZLH_COURSE'
+                                                             ( object         = 'ZLH_COURSE'
                                                                authorizations = VALUE #(
-                                                                  ( VALUE #( ( fieldname   = 'ACTVT'
-                                                                     fieldvalues  = VALUE #( ( lower_value = '06' ) )  ) )  ) )
+                                                                                       ( VALUE #( ( fieldname   = 'ACTVT'
+                                                                                                    fieldvalues = VALUE #( ( lower_value = '06' ) ) ) ) ) )
                                                                ) ).
 
     DATA(usrrl_may_delete)  = VALUE cl_aunit_auth_check_types_def=>user_role_authorizations( ( role_authorizations = role_may_delete ) ).
@@ -144,7 +143,6 @@ CLASS ltcl_course IMPLEMENTATION.
 
     " Set up environment - Configure users with the intended authorizations via the auth_objset for the test session.
     auth_controller->restrict_authorizations_to( auth_objset_with_del_auth ).
-*    lo_handler->get_features_global( requested_features = data(request) ).
   ENDMETHOD.
 
   METHOD class_teardown.

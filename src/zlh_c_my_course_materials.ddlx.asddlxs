@@ -28,7 +28,8 @@ annotate entity zlh_c_my_course_materials with
     lineItem: [{ position: 2,
                  importance: #HIGH }],
     fieldGroup: [{ qualifier: 'MaterialInfo',
-                   position: 2 }]}
+                   position: 2 }],
+    hidden: true }
   CourseId;
   @ UI: {
     lineItem: [{ position: 3,

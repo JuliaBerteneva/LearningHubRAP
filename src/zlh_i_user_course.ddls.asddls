@@ -3,7 +3,7 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'User-Course connection'
 @Metadata.ignorePropagatedAnnotations: false
-define view zlh_i_user_course 
+define view  zlh_i_user_course 
 as select from zlh_user_course as user
 join zlh_i_course as course on course.CourseId = user.courseid
 left outer join ZLH_I_STATUS_VH as status on status.Value = user.status

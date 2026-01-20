@@ -1,0 +1,5 @@
+@EndUserText.label: 'Skills'
+define service Zlh_skills
+  provider contracts odata_v4_ui, odata_v2_ui {
+  expose zlh_c_skill_category;
+}

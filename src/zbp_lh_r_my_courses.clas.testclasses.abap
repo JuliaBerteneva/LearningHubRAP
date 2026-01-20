@@ -19,9 +19,10 @@ CLASS ltcl_my_courses DEFINITION FINAL FOR TESTING
       recalcPercentage FOR TESTING,
       calculatePercentage FOR TESTING.
 
-    DATA: lo_handler       TYPE REF TO lhc_course,
-          lt_course_mock   TYPE TABLE OF zlh_i_my_courses,
-          lt_material_mock TYPE TABLE OF zlh_i_my_crsmtrl.
+    DATA lo_handler       TYPE REF TO lhc_course.
+    DATA lt_course_mock   TYPE TABLE OF zlh_i_my_courses.
+    DATA lt_material_mock TYPE TABLE OF zlh_i_my_crsmtrl.
+
 ENDCLASS.
 
 
@@ -36,8 +37,8 @@ CLASS ltcl_my_courses IMPLEMENTATION.
                                 Moderator = 'ULOPINA'
                                 Duration = 40 ) ).
     lo_environment->insert_test_data( lt_course_mock ).
-    lo_handler->changestatus( EXPORTING keys = VALUE #( FOR course IN lt_course_mock ( %key = CORRESPONDING #( course )
-                                                                                       %param = VALUE #( InStatus = zcl_cc_zlh_status=>gc_inprocess ) ) )  ).
+    lo_handler->changestatus( keys = VALUE #( FOR course IN lt_course_mock ( %key = CORRESPONDING #( course )
+                                                                             %param = VALUE #( InStatus = zcl_cc_zlh_status=>gc_inprocess ) ) )  ).
 
     READ ENTITIES OF zlh_r_my_courses
         ENTITY Course
@@ -71,13 +72,13 @@ CLASS ltcl_my_courses IMPLEMENTATION.
                                   Name = 'Material21'
                                   Status = zcl_cc_zlh_status=>gc_finished ) ).
     lo_environment->insert_test_data( lt_material_mock ).
-    lo_handler->chagestatusmaterial( EXPORTING keys = VALUE #( FOR material IN lt_material_mock ( %key = CORRESPONDING #( material )
-                                                                                                  %param = COND #( WHEN material-Status = zcl_cc_zlh_status=>gc_inprocess
-                                                                                                                   THEN VALUE #( InStatus = zcl_cc_zlh_status=>gc_finished )
-                                                                                                                   ELSE VALUE #( InStatus = zcl_cc_zlh_status=>gc_inprocess )
-                                                                                                                 )
-                                                                                                )
-                                                              )
+    lo_handler->chagestatusmaterial( keys = VALUE #( FOR material IN lt_material_mock ( %key = CORRESPONDING #( material )
+                                                                                        %param = COND #( WHEN material-Status = zcl_cc_zlh_status=>gc_inprocess
+                                                                                                         THEN VALUE #( InStatus = zcl_cc_zlh_status=>gc_finished )
+                                                                                                         ELSE VALUE #( InStatus = zcl_cc_zlh_status=>gc_inprocess )
+                                                                                                       )
+                                                                                      )
+                                                   )
                                     ).
     READ ENTITIES OF zlh_r_my_courses
         ENTITY Material
@@ -107,7 +108,7 @@ CLASS ltcl_my_courses IMPLEMENTATION.
                                   Name = 'Material1'
                                   Status = zcl_cc_zlh_status=>gc_inprocess ) ).
     lo_environment->insert_test_data( lt_material_mock ).
-    lo_handler->markasfinished( EXPORTING keys = VALUE #( FOR material IN lt_material_mock ( %key = CORRESPONDING #( material ) ) )  ).
+    lo_handler->markasfinished( keys = VALUE #( FOR material IN lt_material_mock ( %key = CORRESPONDING #( material ) ) )  ).
     READ ENTITIES OF zlh_r_my_courses
         ENTITY Material
         ALL FIELDS WITH CORRESPONDING #( lt_material_mock )
@@ -135,9 +136,8 @@ CLASS ltcl_my_courses IMPLEMENTATION.
 
     lo_environment->insert_test_data( lt_material_mock ).
 
-    lo_handler->changestatus( EXPORTING keys = VALUE #( FOR course IN lt_course_mock ( %key = CORRESPONDING #( course )
+    lo_handler->changestatus( keys = VALUE #( FOR course IN lt_course_mock ( %key = CORRESPONDING #( course )
                                                                                        %param = VALUE #( InStatus = zcl_cc_zlh_status=>gc_finished ) ) )
-*                              CHANGING reported = reported
                               ).
     lo_handler->checkMaterailStatus( EXPORTING keys = VALUE #( FOR course IN lt_course_mock ( %key = CORRESPONDING #( course ) ) )
                                      CHANGING reported = reported ).
@@ -172,7 +172,7 @@ CLASS ltcl_my_courses IMPLEMENTATION.
                                   Duration = 40 ) ).
 
     lo_environment->insert_test_data( lt_material_mock ).
-    lo_handler->recalcpercentage( EXPORTING keys = VALUE #( FOR course IN lt_course_mock ( %key = CORRESPONDING #( course ) ) ) ).
+    lo_handler->recalcpercentage( keys = VALUE #( FOR course IN lt_course_mock ( %key = CORRESPONDING #( course ) ) ) ).
 
     READ ENTITIES OF zlh_r_my_courses
         ENTITY Course
@@ -213,7 +213,7 @@ CLASS ltcl_my_courses IMPLEMENTATION.
                                   Duration = 40 ) ).
 
     lo_environment->insert_test_data( lt_material_mock ).
-    lo_handler->calculatepercentage( EXPORTING keys = CORRESPONDING #( lt_material_mock ) ).
+    lo_handler->calculatepercentage( keys = CORRESPONDING #( lt_material_mock ) ).
     READ ENTITIES OF zlh_r_my_courses
         ENTITY Course
         ALL FIELDS WITH CORRESPONDING #( lt_course_mock )

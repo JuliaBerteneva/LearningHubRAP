@@ -12,6 +12,7 @@ authorization master ( instance )
   internal create;
 
   action changeStatus parameter zlh_a_status;
+  action deleteMe;
   internal action recalcPercentage result [1] $self;
   internal action finishCourse result [1] $self;
 
@@ -49,6 +50,8 @@ etag master LastChangedAt
 
   action (features : instance)changeStatusMaterial  parameter zlh_a_status ;
   action (features : instance) markAsFinished;
+
+  side effects { action markAsFinished affects entity _course; }
 
   determination calculatePercentage on save { create; update; }
 
