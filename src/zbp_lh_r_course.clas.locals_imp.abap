@@ -35,9 +35,6 @@ ENDCLASS.
 
 CLASS lhc_course IMPLEMENTATION.
   METHOD get_global_authorizations.
-  ENDMETHOD.
-
-  METHOD get_features_global.
     AUTHORITY-CHECK OBJECT 'ZLH_COURSE' ID 'ACTVT' FIELD '06'.
     IF sy-subrc IS NOT INITIAL.
       result-%delete = if_abap_behv=>auth-unauthorized.
@@ -50,6 +47,10 @@ CLASS lhc_course IMPLEMENTATION.
     IF sy-subrc IS NOT INITIAL.
       result-%update = if_abap_behv=>auth-unauthorized.
     ENDIF.
+  ENDMETHOD.
+
+  METHOD get_features_global.
+
   ENDMETHOD.
 
   METHOD calcduration.

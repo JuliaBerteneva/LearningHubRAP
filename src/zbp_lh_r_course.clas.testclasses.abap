@@ -126,23 +126,6 @@ CLASS ltcl_course IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_features_global.
-    " Define a role with DISPLAY authorizations for authorization object S_DEVELOP.
-    DATA(role_may_delete)  = VALUE cl_aunit_auth_check_types_def=>role_auth_objects(
-                                                             ( object         = 'ZLH_COURSE'
-                                                               authorizations = VALUE #(
-                                                                                       ( VALUE #( ( fieldname   = 'ACTVT'
-                                                                                                    fieldvalues = VALUE #( ( lower_value = '06' ) ) ) ) ) )
-                                                               ) ).
-
-    DATA(usrrl_may_delete)  = VALUE cl_aunit_auth_check_types_def=>user_role_authorizations( ( role_authorizations = role_may_delete ) ).
-
-    " Create an auth object set containing display authorizations.
-    DATA(auth_objset_with_del_auth) = cl_aunit_authority_check=>create_auth_object_set( usrrl_may_delete ).
-    " Set up environment - Get an instance of the test controller and set the user configurations.
-    DATA(auth_controller) = cl_aunit_authority_check=>get_controller( ).
-
-    " Set up environment - Configure users with the intended authorizations via the auth_objset for the test session.
-    auth_controller->restrict_authorizations_to( auth_objset_with_del_auth ).
   ENDMETHOD.
 
   METHOD class_teardown.

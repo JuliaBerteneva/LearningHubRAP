@@ -10,7 +10,7 @@
 define view entity ZLH_c_SKILL_CATEGORY_TEXT
   as projection on ZLH_R_SKILL_CATEGORY_TEXT
 {
-      @ObjectModel.text.element : ['Name']
+//      @ObjectModel.text.element : ['Name']
   key CategoryId,
       @Semantics.language: true
   key Language,

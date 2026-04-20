@@ -59,6 +59,32 @@ CLASS lhc_course IMPLEMENTATION.
         ENTITY course
         UPDATE FIELDS ( status enddate )
         WITH CORRESPONDING #( courses ).
+
+    DATA: ls_bapi_head        TYPE bapimathead,
+          ls_bapi_return      TYPE bapiret2,
+          ls_bapi_desc        TYPE bapi_makt,
+          ls_bapi_clientdata  TYPE bapi_mara,
+          ls_bapi_clientdatax TYPE bapi_marax,
+          lt_bapi_desc        TYPE TABLE OF bapi_makt.
+
+
+    DATA: lv_error_flag TYPE abap_bool.
+
+
+    ls_bapi_head = VALUE #( material   = '0001'
+                            matl_type  = 'DIEN'
+                            basic_view = abap_true
+                            ind_sector = 'C' ).
+
+    ls_bapi_clientdata = VALUE #( base_uom   = 'MG'
+                                  matl_group = '01' ).
+    ls_bapi_clientdatax = VALUE #( base_uom   = abap_true
+                                   matl_group = abap_true ).
+
+    ls_bapi_desc-langu = sy-langu.
+    ls_bapi_desc-langu_iso = 'EN'.
+    ls_bapi_desc-matl_desc ='Text'.
+    APPEND ls_bapi_desc TO lt_bapi_desc.
   ENDMETHOD.
 
   METHOD chagestatusmaterial.

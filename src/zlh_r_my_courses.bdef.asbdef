@@ -1,6 +1,5 @@
 managed implementation in class zbp_lh_r_my_courses unique;
 strict ( 2 );
-
 define behavior for zlh_r_my_courses alias Course
 persistent table zlh_user_course
 lock master
@@ -8,7 +7,7 @@ etag master LastChangedAt
 authorization master ( instance )
 {
   update;
-  internal delete;
+  internal delete; //can be called inside BDEF implementation only
   internal create;
 
   action changeStatus parameter zlh_a_status;
@@ -20,6 +19,7 @@ authorization master ( instance )
   field(readonly) UserId, Percentage;
 
   association _materials;
+  association _course;
 
   validation checkMaterialStatus on save { create; update; field Status; }
 

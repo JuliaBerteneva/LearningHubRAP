@@ -1,12 +1,13 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Cousre Business object'
+@EndUserText.label: 'Course Business object'
 @Metadata.ignorePropagatedAnnotations: false
 define root view entity zlh_r_course
   as select from zlh_i_course
-  association to ZLH_I_course_TYPE_VH  as _courseType on _courseType.Value = $projection.Type
-  association to zlh_i_skill_category_vh  as _skillCategory on _skillCategory.Value = $projection.SkillCategory
-association [1..1] to ZLH_I_Moderator_info as _moderator on _moderator.UserId = $projection.Moderator
-  composition [1..*] of zlh_r_material as _materials
+  association        to ZLH_I_course_TYPE_VH    as _courseType    on _courseType.Value = $projection.Type
+  association        to zlh_i_skill_category_vh as _skillCategory on _skillCategory.Value = $projection.SkillCategory
+  association [1..1] to ZLH_I_Moderator_info    as _moderator     on _moderator.UserId = $projection.Moderator
+  association to many zlh_r_my_courses as _myCourse on _myCourse.CourseId = $projection.CourseId
+  composition [1..*] of zlh_r_material          as _materials
 {
   key CourseId,
       CourseKey,
@@ -37,10 +38,13 @@ association [1..1] to ZLH_I_Moderator_info as _moderator on _moderator.UserId = 
       @EndUserText.label: 'Changed At'
       @Semantics.systemDateTime.lastChangedAt: true
       LastChangedAt,
+      //Associations
       _materials,
       _moderator,
       _createdBy,
       _changedBy,
       _courseType,
-      _skillCategory
+      _skillCategory,
+      //Cross-BO
+      _myCourse
 }

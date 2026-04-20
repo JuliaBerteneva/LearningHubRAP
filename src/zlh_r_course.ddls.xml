@@ -5,7 +5,7 @@
    <DDLS>
     <DDLNAME>ZLH_R_COURSE</DDLNAME>
     <DDLANGUAGE>E</DDLANGUAGE>
-    <DDTEXT>Cousre Business object</DDTEXT>
+    <DDTEXT>Course Business object</DDTEXT>
     <SOURCE_TYPE>W</SOURCE_TYPE>
    </DDLS>
   </asx:values>

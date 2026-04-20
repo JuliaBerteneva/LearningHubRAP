@@ -10,7 +10,8 @@
 define root view entity zlh_r_my_courses
   as select from zlh_i_my_courses as course
   association to zlh_i_my_info                    as _user   on _user.UserId = $projection.Userid
-  association to ZLH_I_STATUS_VH                  as _status on _status.Value = $projection.Status
+  association to ZLH_I_STATUS_VH                 as _status on _status.Value = $projection.Status
+  association to one zlh_r_course as _course on _course.CourseId = $projection.CourseId
   composition [1..*] of zlh_r_my_course_materials as _materials
 {
   key CourseId,
@@ -36,5 +37,7 @@ define root view entity zlh_r_my_courses
       LastChangedAt,
       _user,
       _materials,
-      _status
+      _status,
+      //Cross BO
+      _course
 }

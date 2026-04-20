@@ -1,4 +1,7 @@
 @Metadata.layer: #CUSTOMER
+@UI.presentationVariant: [{
+  sortOrder: [{ by: 'Name', direction: #DESC }]
+}]
 annotate entity zlh_c_skill_category with
 {
   @UI.facet: [
@@ -11,16 +14,18 @@ annotate entity zlh_c_skill_category with
        label: 'Category'
   }
     ]
-  @ UI: {
-  lineItem: [{ position: 1,
-               importance: #HIGH ,
-               label: 'Category Id'}],
-  fieldGroup: [{ qualifier: 'Category',
-                 position: 1 }]
-  }
+  //  @ UI: {
+  //  lineItem: [{ position: 1,
+  //               importance: #HIGH ,
+  //               label: 'Category Id'}],
+  //  fieldGroup: [{ qualifier: 'Category',
+  //                 position: 1 }]
+  //  }
+
+  @ UI: {hidden:true}
   CategoryId;
   @ UI: {
-  lineItem: [{ position: 2,
+  lineItem: [{ position: 1,
                importance: #HIGH ,
                label: 'Category Key' }],
   fieldGroup: [{ qualifier: 'Category',
@@ -28,7 +33,7 @@ annotate entity zlh_c_skill_category with
   }
   CategoryKey;
   @ UI: {
-  lineItem: [{ position: 3,
+  lineItem: [{ position: 2,
                importance: #HIGH ,
                label: 'Category Name' }],
   fieldGroup: [{ qualifier: 'Category',

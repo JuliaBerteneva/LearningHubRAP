@@ -46,8 +46,8 @@ etag master LastChangedAt
   update;
   delete;
 
-  field ( readonly ) CategoryId;
-  field ( readonly ) Language;
+  field ( readonly:update ) CategoryId;
+  field ( readonly:update ) Language;
   field ( readonly ) CreatedBy, CretedAt, LastChangedAt, LastChangedBy;
 
   association _category { with draft; }

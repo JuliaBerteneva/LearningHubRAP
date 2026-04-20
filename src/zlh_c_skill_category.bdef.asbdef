@@ -4,8 +4,8 @@ use draft;
 
 define behavior for zlh_c_skill_category alias Category
 {
-  use create( augment );
-  use update( augment );
+  use create;
+  use update(augment);
   use delete;
   field ( modify ) Name;
   use association _text { create; with draft; }

@@ -21,5 +21,7 @@ define root view entity zlh_c_my_courses
       LastChangedAt,
       /* Associations */
       _materials : redirected to composition child zlh_c_my_course_materials,
-      _user
+      _user,
+      //Cross BO
+      _course
 }

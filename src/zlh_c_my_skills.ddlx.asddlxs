@@ -1,0 +1,59 @@
+@Metadata.layer: #CUSTOMER
+annotate entity zlh_c_my_skills with
+{
+  @UI.facet: [
+    {
+         id:'MySkillInfo',
+         type: #FIELDGROUP_REFERENCE,
+         purpose:         #STANDARD,
+         position: 10,
+         targetQualifier: 'MySkills',
+         label: 'MySkills'
+    }
+      ]
+  @ UI: {
+      lineItem: [{ position: 1,
+                   hidden: true  } ],
+      fieldGroup: [{ qualifier: 'MySkillInfo',
+                     position: 1 }
+      ]
+       }
+  SkillId;
+  @ UI: {
+    lineItem: [{ position: 2  },
+                  {type: #FOR_ACTION, dataAction: 'UploadFromFile', label: 'Upload File', position: 10 }],
+    fieldGroup: [{ qualifier: 'MySkillInfo',
+                   position: 2 }]
+     }
+  SkillName;
+  @ UI: {
+    lineItem: [{ position: 3  }],
+    fieldGroup: [{ qualifier: 'MySkillInfo',
+                   position: 3 }]
+     }
+  Description;
+  @ UI: {
+    lineItem: [{ position: 4  }],
+    fieldGroup: [{ qualifier: 'MySkillInfo',
+                   position: 4 }]
+     }
+  Category;
+  @ UI: {
+    lineItem: [{ position: 5  }],
+    fieldGroup: [{ qualifier: 'MySkillInfo',
+                   position: 5 }]
+     }
+  Scale;
+  @ UI: {
+    lineItem: [{ position: 6  }],
+    fieldGroup: [{ qualifier: 'MySkillInfo',
+                   position: 6 }]
+     }
+  WantToLearn;
+  @ UI: {
+    lineItem: [{ position: 7  }],
+    fieldGroup: [{ qualifier: 'MySkillInfo',
+                   position: 7 }]
+     }
+  ProposedForLearning;
+}

@@ -1,0 +1,22 @@
+managed implementation in class zbp_lh_r_my_skills unique;
+strict ( 2 );
+
+define behavior for zlh_r_my_skills alias Skills
+persistent table zlh_user_skill
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+
+  static factory action UploadFromFile parameter zlh_a_skills_file [1];
+  mapping for zlh_user_skill {
+    SkillId = skill_id;
+    UserId = uname;
+  }
+
+  field (readonly, numbering : managed ) SkillId;
+  field (readonly) UserID;
+}
