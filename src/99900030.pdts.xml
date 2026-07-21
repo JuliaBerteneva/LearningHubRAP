@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_PDTS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <PDTS>
+    <SHORT_TEXT>LD_APPROVE</SHORT_TEXT>
+    <PLVAR>01</PLVAR>
+    <WI_TEXT>Decide between the alternatives available</WI_TEXT>
+    <METHOD>
+     <OTYPE>TS</OTYPE>
+     <OBJID>99900030</OBJID>
+     <CLSNAM>ZCL_LH_COURSE_WORKFLOW</CLSNAM>
+     <CLSMET>LD_APPROVE</CLSMET>
+     <METHTYPE>CL</METHTYPE>
+     <SYNCHRON>X</SYNCHRON>
+     <TSKRELSTAT>R</TSKRELSTAT>
+     <WEB_ABLE>X</WEB_ABLE>
+    </METHOD>
+    <DESCRIPTIONS>
+     <HRS1002>
+      <OTYPE>TS</OTYPE>
+      <OBJID>99900030</OBJID>
+      <LANGU>E</LANGU>
+      <SUBTY>0120</SUBTY>
+      <TABSEQNR>000001</TABSEQNR>
+      <TLINE>Please take a look at the new Course created and make a decision on</TLINE>
+      <TFORMAT>*</TFORMAT>
+     </HRS1002>
+     <HRS1002>
+      <OTYPE>TS</OTYPE>
+      <OBJID>99900030</OBJID>
+      <LANGU>E</LANGU>
+      <SUBTY>0120</SUBTY>
+      <TABSEQNR>000002</TABSEQNR>
+      <TLINE>whether to Approve or Decline it</TLINE>
+     </HRS1002>
+     <HRS1002>
+      <OTYPE>TS</OTYPE>
+      <OBJID>99900030</OBJID>
+      <LANGU>E</LANGU>
+      <SUBTY>0120</SUBTY>
+      <TABSEQNR>000003</TABSEQNR>
+      <TFORMAT>*</TFORMAT>
+     </HRS1002>
+     <HRS1002>
+      <OTYPE>TS</OTYPE>
+      <OBJID>99900030</OBJID>
+      <LANGU>E</LANGU>
+      <SUBTY>0120</SUBTY>
+      <TABSEQNR>000004</TABSEQNR>
+      <TFORMAT>*</TFORMAT>
+     </HRS1002>
+     <HRS1002>
+      <OTYPE>TS</OTYPE>
+      <OBJID>99900030</OBJID>
+      <LANGU>E</LANGU>
+      <SUBTY>0120</SUBTY>
+      <TABSEQNR>000005</TABSEQNR>
+      <TFORMAT>*</TFORMAT>
+     </HRS1002>
+     <HRS1002>
+      <OTYPE>TS</OTYPE>
+      <OBJID>99900030</OBJID>
+      <LANGU>E</LANGU>
+      <SUBTY>0120</SUBTY>
+      <TABSEQNR>000006</TABSEQNR>
+      <TFORMAT>*</TFORMAT>
+     </HRS1002>
+     <HRS1002>
+      <OTYPE>TS</OTYPE>
+      <OBJID>99900030</OBJID>
+      <LANGU>E</LANGU>
+      <SUBTY>0121</SUBTY>
+      <TABSEQNR>000001</TABSEQNR>
+      <TLINE>User &amp;_Workitem.ExecutedByUser.Name&amp; made the user decision.</TLINE>
+      <TFORMAT>*</TFORMAT>
+     </HRS1002>
+     <HRS1002>
+      <OTYPE>TS</OTYPE>
+      <OBJID>99900030</OBJID>
+      <LANGU>E</LANGU>
+      <SUBTY>0122</SUBTY>
+      <TABSEQNR>000001</TABSEQNR>
+      <TLINE>The latest end set in the workflow definition for the decision has</TLINE>
+      <TFORMAT>*</TFORMAT>
+     </HRS1002>
+     <HRS1002>
+      <OTYPE>TS</OTYPE>
+      <OBJID>99900030</OBJID>
+      <LANGU>E</LANGU>
+      <SUBTY>0122</SUBTY>
+      <TABSEQNR>000002</TABSEQNR>
+      <TLINE>passed.</TLINE>
+     </HRS1002>
+     <HRS1002>
+      <OTYPE>TS</OTYPE>
+      <OBJID>99900030</OBJID>
+      <LANGU>E</LANGU>
+      <SUBTY>0123</SUBTY>
+      <TABSEQNR>000001</TABSEQNR>
+      <TLINE>The deadline set in the workflow definition for the requested end for</TLINE>
+      <TFORMAT>*</TFORMAT>
+     </HRS1002>
+     <HRS1002>
+      <OTYPE>TS</OTYPE>
+      <OBJID>99900030</OBJID>
+      <LANGU>E</LANGU>
+      <SUBTY>0123</SUBTY>
+      <TABSEQNR>000002</TABSEQNR>
+      <TLINE>the decision has been missed.</TLINE>
+     </HRS1002>
+     <HRS1002>
+      <OTYPE>TS</OTYPE>
+      <OBJID>99900030</OBJID>
+      <LANGU>E</LANGU>
+      <SUBTY>0124</SUBTY>
+      <TABSEQNR>000001</TABSEQNR>
+      <TLINE>The deadline set in the workflow definition for the latest start for the</TLINE>
+      <TFORMAT>*</TFORMAT>
+     </HRS1002>
+     <HRS1002>
+      <OTYPE>TS</OTYPE>
+      <OBJID>99900030</OBJID>
+      <LANGU>E</LANGU>
+      <SUBTY>0124</SUBTY>
+      <TABSEQNR>000002</TABSEQNR>
+      <TLINE>decision has been missed.</TLINE>
+     </HRS1002>
+    </DESCRIPTIONS>
+   </PDTS>
+   <CONTAINER>
+    <CONTAINER>
+     <PROPERTIES>
+      <OWN_ID>
+       <INSTID>TS99900030</INSTID>
+       <TYPEID>CL_SWF_CNT_HRS_PERSISTENCE</TYPEID>
+       <CATID>CL</CATID>
+      </OWN_ID>
+      <PROPSTRING>23000000000008</PROPSTRING>
+      <XMLVERSION>0002</XMLVERSION>
+      <INTERNAL>X</INTERNAL>
+      <EXDEFINITN>
+       <NAME>_DEF_EXT</NAME>
+       <POR>
+        <INSTID>DIALOG_STEP_CONTAINER</INSTID>
+        <TYPEID>CL_SWF_CNT_PERSISTENCE_DEF_EXT</TYPEID>
+        <CATID>CL</CATID>
+       </POR>
+      </EXDEFINITN>
+     </PROPERTIES>
+     <ELEMENTS>
+      <N NAME="EXTENDED:Extended:" TYPE="::SYST-INPUT:C:1:0" PROPS="0C003201"/>
+      <O NAME="NOTE_REFERENCE:Note_Reference:" TYPE="SOFM:BO::u:0:0" PROPS="0C921201"/>
+      <P NAME="DECISION_NOTE::" TYPE="SOFM:BO::u:0:0" PROPS="0C920A01"/>
+     </ELEMENTS>
+    </CONTAINER>
+   </CONTAINER>
+  </asx:values>
+ </asx:abap>
+</abapGit>

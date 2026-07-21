@@ -5,7 +5,6 @@ define behavior for zlh_r_my_skills alias Skills
 persistent table zlh_user_skill
 lock master
 authorization master ( instance )
-//etag master <field_name>
 {
   create;
   update;
@@ -15,8 +14,9 @@ authorization master ( instance )
   mapping for zlh_user_skill {
     SkillId = skill_id;
     UserId = uname;
+    Scale = scale;
   }
 
-  field (readonly, numbering : managed ) SkillId;
-  field (readonly) UserID;
+  field (readonly:update) SkillId;
+  field (readonly:update) UserID;
 }

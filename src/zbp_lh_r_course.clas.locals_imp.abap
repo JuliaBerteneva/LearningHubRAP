@@ -1,3 +1,54 @@
+CLASS lsc_zlh_r_course DEFINITION INHERITING FROM cl_abap_behavior_saver.
+
+  PROTECTED SECTION.
+
+    METHODS save_modified REDEFINITION.
+
+ENDCLASS.
+
+CLASS lsc_zlh_r_course IMPLEMENTATION.
+
+  METHOD save_modified.
+    DATA: lo_container TYPE REF TO if_swf_ifs_parameter_container.
+    DATA: ls_course       TYPE zlh_course,
+          lt_input_course TYPE TABLE FOR CHANGE zlh_r_course\\course,
+          ls_input_course LIKE LINE OF lt_input_course.
+    IF create-course IS NOT INITIAL.
+
+      ls_input_course = create-course[ 1 ].
+    ENDIF.
+    IF update-course IS NOT INITIAL.
+
+      ls_input_course = update-course[ 1 ].
+    ENDIF.
+    IF ls_input_course IS NOT INITIAL.
+      TRY.
+          lo_container = cl_swf_evt_event=>get_event_container( im_objcateg = cl_swf_evt_event=>mc_objcateg_cl
+                                                                im_objtype  = 'ZCL_LH_CWF'
+                                                                im_event    = 'RAISE_APPROVAL' ).
+          ls_course-course_id = ls_input_course-courseId.
+          ls_course-course_key = ls_input_course-CourseKey.
+          lo_container->set( name  = 'IS_COURSE'
+                             value = ls_course ).
+          lo_container->set( name  = 'Course_Link'
+                             value = |https://us4.leverx.local:44302/sap/bc/ui2/flp?sap-client=100&sap-language=EN#LEARNING_HUB-manage&/zlh_c_course(CourseId=guid'{ ls_input_course-courseId }',IsActiveEntity=true)| ).
+
+
+          DATA(lo_event) = cl_swf_evt_event=>get_instance( im_objcateg        = cl_swf_evt_event=>mc_objcateg_cl
+                                                           im_objtype         = 'ZCL_LH_CWF'
+                                                           im_event           = 'RAISE_APPROVAL'
+                                                           im_objkey          = CONV char16( ls_course-course_id )
+                                                           im_event_container = lo_container ).
+          lo_event->raise( ).
+          DATA(lv_event_id) = lo_event->get_event_id(  ).
+        CATCH cx_root.
+          "handle exception
+      ENDTRY.
+    ENDIF.
+  ENDMETHOD.
+
+ENDCLASS.
+
 CLASS ltcl_course DEFINITION DEFERRED FOR TESTING.
 CLASS lhc_course DEFINITION INHERITING FROM cl_abap_behavior_handler FRIENDS ltcl_course.
   PRIVATE SECTION.

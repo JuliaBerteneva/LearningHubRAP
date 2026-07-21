@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Course Workflow Actions</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZLH_COURSE_WORKFLOWTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZLH_COURSE_WORKFLOW</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZLH_COURSE_APPROVE</FUNCNAME>
+     <SHORT_TEXT>Approve course</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>BOR_OBJECT_KEY</PARAMETER>
+       <TYP>SIBFLPORB</TYP>
+      </RSIMP>
+     </IMPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>BOR_OBJECT_KEY</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -4,6 +4,7 @@ with draft;
 
 define behavior for zlh_r_course alias Course
 persistent table zlh_course
+with additional save
 draft table zlh_course_d
 lock master
 total etag LastChangedAt

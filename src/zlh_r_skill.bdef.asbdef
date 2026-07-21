@@ -1,0 +1,38 @@
+managed implementation in class zbp_lh_r_skill unique;
+strict ( 2 );
+with draft;
+
+define behavior for zlh_r_skill
+persistent table zlh_skills
+draft table zlh_skills_d
+lock master
+total etag LastChangedAt
+authorization master ( instance )
+etag master LastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  field ( readonly, numbering : managed ) SkillId;
+
+  draft action Resume;
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft determine action Prepare
+  {
+  }
+
+  mapping for zlh_skills corresponding
+    {
+      skillId       = skill_id;
+      Name          = name;
+      Description   = description;
+      Category      = category;
+      CreatedBy     = created_by;
+      CretedAt      = created_at;
+      LastChangedBy = last_changed_by;
+      LastChangedAt = last_changed_at;
+    }
+}
