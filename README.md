@@ -2,8 +2,6 @@
 
 This repository contains a set of **RAP-based Fiori applications** designed for professional growth tracking.
 
-The project serves both as a **realistic RAP practice case** and as a **useful tool** for managing learning and development activities.
-
 ## 🧠 Overview
 
 The system currently includes three apps:
@@ -27,16 +25,7 @@ All apps are:
 
 ## 📈 Purpose
 
-This project is part of the *Personal Growth Apps* series — a set of small, real-life logical apps for:
-
-- Practicing RAP development
-- Tracking learning and growth activities
-- Building a structured portfolio of ABAP/Fiori work
-
-## 📷 Screenshots
-
-Can be found in following blog posts:
-
+This project is part of the *Personal Growth Apps* series — a set of small, real-life logical apps for tracking learning and growth activities of employee
 
 ## 🔗 Author
 
