@@ -1,0 +1,29 @@
+{
+  "generationParameters": {
+    "generationDate": "Thu Sep 17 2026 16:05:21 GMT+0400 (Georgia Standard Time)",
+    "generatorPlatform": "Visual Studio Code",
+    "serviceType": "SAP System (ABAP On-Premise)",
+    "metadataFilename": "",
+    "serviceUrl": "http://us4.leverx.local:8000/sap/opu/odata4/sap/zlh_skills/srvd/sap/zlh_skills/0001/",
+    "appName": "zlh_bsp_skills_category",
+    "appTitle": "Skills Category",
+    "appDescription": "Skills Category",
+    "appNamespace": "",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.120.14",
+    "enableEslint": true,
+    "enableTypeScript": false,
+    "showMockDataInfo": true,
+    "generatorVersion": "1.31.1",
+    "template": "List Report Page V4",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [
+      {
+        "type": "Main Entity",
+        "value": "zlh_c_skill_category"
+      }
+    ],
+    "launchText": "To launch the generated application, run the following from the generated application root folder:\n\n```\n    npm start\n```",
+    "valueHelpDownloaded": true
+  }
+}
