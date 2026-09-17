@@ -1,0 +1,179 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "zlhbspallcrs",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.31.1",
+      "toolsId": "3697a434-25e6-48cb-bcde-94bfbbfc4c35"
+    },
+    "dataSources": {
+      "annotation": {
+        "type": "ODataAnnotation",
+        "uri": "annotations/annotation.xml",
+        "settings": {
+          "localUri": "annotations/annotation.xml"
+        }
+      },
+      "mainService": {
+        "uri": "/sap/opu/odata4/sap/zlh_personal_growth/srvd/sap/zlh_personal_growth/0001/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "annotation"
+          ],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.120.14",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "zlhbspallcrs.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "zlh_c_courseList",
+          "target": "zlh_c_courseList"
+        },
+        {
+          "pattern": "zlh_c_course({key}):?query:",
+          "name": "zlh_c_courseObjectPage",
+          "target": "zlh_c_courseObjectPage"
+        },
+        {
+          "pattern": "zlh_c_course({key})/_materials({key2}):?query:",
+          "name": "zlh_c_materialObjectPage",
+          "target": "zlh_c_materialObjectPage"
+        }
+      ],
+      "targets": {
+        "zlh_c_courseList": {
+          "type": "Component",
+          "id": "zlh_c_courseList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/zlh_c_course",
+              "variantManagement": "Page",
+              "navigation": {
+                "zlh_c_course": {
+                  "detail": {
+                    "route": "zlh_c_courseObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "zlh_c_courseObjectPage": {
+          "type": "Component",
+          "id": "zlh_c_courseObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/zlh_c_course",
+              "navigation": {
+                "_materials": {
+                  "detail": {
+                    "route": "zlh_c_materialObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "zlh_c_materialObjectPage": {
+          "type": "Component",
+          "id": "zlh_c_materialObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/zlh_c_course/_materials"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.fe": {
+    "app": {
+      "enableLazyLoading": true
+    }
+  }
+}
