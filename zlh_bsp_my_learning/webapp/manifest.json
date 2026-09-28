@@ -1,0 +1,148 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "zlhbspmylearning",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:ovp",
+      "version": "1.31.1",
+      "toolsId": "4b8134f4-db7c-40b9-8b40-bfec632511d1"
+    },
+    "dataSources": {
+      "annotation": {
+        "type": "ODataAnnotation",
+        "uri": "annotations/annotation.xml",
+        "settings": {
+          "localUri": "annotations/annotation.xml"
+        }
+      },
+      "mainService": {
+        "uri": "/sap/opu/odata4/sap/zlh_personal_growth/srvd/sap/zlh_personal_growth/0001/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "annotation"
+          ],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.120.14",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {},
+        "sap.ovp": {},
+        "sap.ui.rta": {},
+        "sap.ui.layout": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "zlhbspmylearning.i18n.i18n"
+        }
+      },
+      "mainModel": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "routing": {
+      "config": {},
+      "routes": [],
+      "targets": {}
+    }
+  },
+  "sap.ovp": {
+    "globalFilterModel": "mainModel",
+    "globalFilterEntitySet": "zlh_c_my_courses_filter",
+    "containerLayout": "resizable",
+    "enableLiveFilter": true,
+    "considerAnalyticalParameters": false,
+    "cards": {
+      "MyCourseListCard": {
+        "template": "sap.ovp.cards.v4.table",
+        "model": "mainModel",
+        "settings": {
+          "entitySet": "zlh_c_my_course_list",
+          "title": "My Courses",
+          "annotationPath": "com.sap.vocabularies.UI.v1.LineItem#MyCourseList",
+          "identificationAnnotationPath": "com.sap.vocabularies.UI.v1.Identification#CourseNav",
+          "dataPointAnnotationPath": "com.sap.vocabularies.UI.v1.DataPoint#CourseProgress",
+          "selectionAnnotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#InProgressCourses",
+          "sortBy": "Name",
+          "sortOrder": "ascending"
+        }
+      },
+      "MyCourseChartCard": {
+        "template": "sap.ovp.cards.v4.charts.analytical",
+        "model": "mainModel",
+        "settings": {
+          "chartAnnotationPath": "com.sap.vocabularies.UI.v1.Chart#MyCourseChart",
+          "entitySet": "zlh_c_my_course_chart",
+          "title": "Courses by Status",
+          "subTitle": "Overview of your course progress",
+          "identificationAnnotationPath": "com.sap.vocabularies.UI.v1.Identification#ChartNav",
+          "dataPointAnnotationPath": "com.sap.vocabularies.UI.v1.DataPoint#MyCourseChartKPI",
+          "presentationAnnotationPath": "com.sap.vocabularies.UI.v1.PresentationVariant#MyCourseChartPV"
+        }
+      }
+    },
+    "globalFilterControlType": "MacroFilterBar"
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "analytical"
+  },
+  "sap.fe": {
+    "app": {
+      "enableLazyLoading": true
+    }
+  }
+}
