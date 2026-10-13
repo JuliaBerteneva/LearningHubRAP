@@ -54,6 +54,15 @@
   },
   "sap.ui5": {
     "flexEnabled": true,
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {
+          "sap.fe.templates.ListReport.ListReportController": {
+            "controllerName": "zlhbspskillshub.ext.controller.ListReportExtend"
+          }
+        }
+      }
+    },
     "dependencies": {
       "minUI5Version": "1.120.14",
       "libs": {
@@ -124,6 +133,15 @@
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
                     "type": "ResponsiveTable"
+                  },
+                  "actions": {
+                    "SuggestForCustom": {
+                      "press": "/extension/zlhbspskillshub.ext.controller.ListReportExtend.onSuggestFor",
+                      "requiresSelection": true,
+                      "visible": true,
+                      "enabled": "{= %{selectedContexts}.length > 0 }",
+                      "text": "{i18n>suggestForButtonText}"
+                    }
                   }
                 }
               }

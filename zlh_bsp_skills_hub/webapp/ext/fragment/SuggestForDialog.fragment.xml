@@ -1,0 +1,30 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        id="suggestForDialog"
+        title="{i18n>suggestForDialogTitle}"
+        contentWidth="25rem"
+        verticalScrolling="false"
+    >
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Label text="{i18n>suggestForColleaguesLabel}" labelFor="suggestForColleaguesInput"/>
+                <MultiComboBox
+                    id="suggestForColleaguesInput"
+                    width="100%"
+                    items="{path: '/zlh_i_team'}"
+                >
+                    <core:Item key="{UserId}" text="{FullName}"/>
+                </MultiComboBox>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button text="{i18n>suggestForConfirm}" type="Emphasized" press=".onSuggestForConfirm"/>
+        </beginButton>
+        <endButton>
+            <Button text="{i18n>suggestForCancel}" press=".onSuggestForCancel"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
