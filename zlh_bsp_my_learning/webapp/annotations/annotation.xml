@@ -1,7 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
-    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
-        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
-    </edmx:Reference>
     <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
         <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
     </edmx:Reference>
@@ -14,7 +12,6 @@
                 <Annotation Term="UI.DataPoint" Qualifier="CourseProgress">
                     <Record Type="UI.DataPointType">
                         <PropertyValue Property="Value" Path="Percentage"/>
-                        <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Critical"/>
                         <PropertyValue Property="Title" String="Course Progress"/>
                         <PropertyValue Property="Description" String="Percentage of course completed"/>
                     </Record>
@@ -23,37 +20,24 @@
                     <Collection>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="Name"/>
-                            <PropertyValue Property="Label" String="Course"/>
+                            <PropertyValue Property="Label" String="Course Name"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Status"/>
+                            <PropertyValue Property="Label" String="Status"/>
+                        </Record>
+                        <Record Type="UI.DataFieldForAnnotation">
+                            <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#CourseProgress"/>
+                            <PropertyValue Property="Label" String="Progress"/>
                         </Record>
                     </Collection>
-                </Annotation>
-                <Annotation Term="UI.SelectionVariant" Qualifier="InProgressCourses">
-                    <Record>
-                        <PropertyValue Property="SelectOptions">
-                            <Collection>
-                                <Record Type="UI.SelectOptionType">
-                                    <PropertyValue Property="PropertyName" PropertyPath="Status"/>
-                                    <PropertyValue Property="Ranges">
-                                        <Collection>
-                                            <Record Type="UI.SelectionRangeType">
-                                                <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I"/>
-                                                <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ"/>
-                                                <PropertyValue Property="Low" String="IN PROCESS"/>
-                                            </Record>
-                                        </Collection>
-                                    </PropertyValue>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                        <PropertyValue Property="Text" String="In Progress"/>
-                    </Record>
                 </Annotation>
                 <Annotation Term="UI.Identification" Qualifier="CourseNav">
                     <Collection>
                         <Record Type="UI.DataFieldForIntentBasedNavigation">
                             <PropertyValue Property="SemanticObject" String="MY_COURSES"/>
                             <PropertyValue Property="Action" String="manage"/>
-                            <PropertyValue Property="Label" String="View Course"/>
+                            <PropertyValue Property="Label" String="View My Courses"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                         </Record>
                     </Collection>
@@ -95,14 +79,6 @@
                 </Annotation>
                 <Annotation Term="UI.PresentationVariant" Qualifier="MyCourseChartPV">
                     <Record>
-                        <PropertyValue Property="SortOrder">
-                            <Collection>
-                                <Record Type="Common.SortOrderType">
-                                    <PropertyValue Property="Property" PropertyPath="TotalAmount"/>
-                                    <PropertyValue Property="Descending" Bool="true"/>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
                         <PropertyValue Property="Visualizations">
                             <Collection>
                                 <AnnotationPath>@UI.Chart#MyCourseChart</AnnotationPath>
@@ -110,19 +86,21 @@
                         </PropertyValue>
                     </Record>
                 </Annotation>
-                <Annotation Term="UI.DataPoint" Qualifier="MyCourseChartKPI">
+                <Annotation Term="UI.DataPoint" Qualifier="TotalCoursesKPI">
                     <Record Type="UI.DataPointType">
                         <PropertyValue Property="Value" Path="TotalAmount"/>
                         <PropertyValue Property="Title" String="Total Courses"/>
                         <PropertyValue Property="Description" String="Total number of courses"/>
                     </Record>
                 </Annotation>
-                <Annotation Term="UI.Identification" Qualifier="ChartNav">
+                <Annotation Term="UI.Identification">
                     <Collection>
                         <Record Type="UI.DataFieldForIntentBasedNavigation">
                             <PropertyValue Property="SemanticObject" String="MY_COURSES"/>
-                            <PropertyValue Property="Label" String="View Courses"/>
                             <PropertyValue Property="Action" String="manage"/>
+                            <PropertyValue Property="RequiresContext" Bool="false"/>
+                            <PropertyValue Property="Label" String="View My Courses"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                         </Record>
                     </Collection>
                 </Annotation>

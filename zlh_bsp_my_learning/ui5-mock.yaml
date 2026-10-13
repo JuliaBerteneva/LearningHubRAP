@@ -1,5 +1,3 @@
-# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
-
 specVersion: "4.0"
 metadata:
   name: zlhbspmylearning
@@ -9,7 +7,7 @@ server:
     - name: fiori-tools-proxy
       afterMiddleware: compression
       configuration:
-        ignoreCertErrors: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+        ignoreCertErrors: false
         ui5:
           path:
             - /resources
@@ -40,6 +38,14 @@ server:
             generateMockData: true
             resolveExternalServiceReferences: true
         annotations: []
+    - name: fiori-tools-servestatic
+      afterMiddleware: compression
+      configuration:
+        paths:
+          - path: /resources/zlhbspmycourses
+            src: ..\zlh_bsp_my_courses\webapp
+          - path: /appconfig
+            src: appconfig
 builder:
   resources:
     excludes:

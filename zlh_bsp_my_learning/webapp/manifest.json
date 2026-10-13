@@ -114,8 +114,6 @@
           "title": "My Courses",
           "annotationPath": "com.sap.vocabularies.UI.v1.LineItem#MyCourseList",
           "identificationAnnotationPath": "com.sap.vocabularies.UI.v1.Identification#CourseNav",
-          "dataPointAnnotationPath": "com.sap.vocabularies.UI.v1.DataPoint#CourseProgress",
-          "selectionAnnotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#InProgressCourses",
           "sortBy": "Name",
           "sortOrder": "ascending"
         }
@@ -124,12 +122,12 @@
         "template": "sap.ovp.cards.v4.charts.analytical",
         "model": "mainModel",
         "settings": {
-          "chartAnnotationPath": "com.sap.vocabularies.UI.v1.Chart#MyCourseChart",
+          "chartAnnotationPath": "com.sap.vocabularies.UI.v1.Chart#StatusChart",
           "entitySet": "zlh_c_my_course_chart",
           "title": "Courses by Status",
           "subTitle": "Overview of your course progress",
-          "identificationAnnotationPath": "com.sap.vocabularies.UI.v1.Identification#ChartNav",
-          "dataPointAnnotationPath": "com.sap.vocabularies.UI.v1.DataPoint#MyCourseChartKPI",
+          "identificationAnnotationPath": "com.sap.vocabularies.UI.v1.Identification",
+          "dataPointAnnotationPath": "com.sap.vocabularies.UI.v1.DataPoint#TotalCoursesKPI",
           "presentationAnnotationPath": "com.sap.vocabularies.UI.v1.PresentationVariant#MyCourseChartPV"
         }
       }
