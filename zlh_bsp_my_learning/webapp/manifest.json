@@ -62,7 +62,9 @@
         "sap.fe.templates": {},
         "sap.ovp": {},
         "sap.ui.rta": {},
-        "sap.ui.layout": {}
+        "sap.ui.layout": {},
+        "sap.viz": {},
+        "sap.chart": {}
       }
     },
     "contentDensities": {
@@ -119,16 +121,14 @@
         }
       },
       "MyCourseChartCard": {
-        "template": "sap.ovp.cards.v4.charts.analytical",
+        "template": "sap.ovp.cards.v4.custom",
         "model": "mainModel",
         "settings": {
-          "chartAnnotationPath": "com.sap.vocabularies.UI.v1.Chart#StatusChart",
-          "entitySet": "zlh_c_my_course_chart",
           "title": "Courses by Status",
           "subTitle": "Overview of your course progress",
-          "identificationAnnotationPath": "com.sap.vocabularies.UI.v1.Identification",
-          "dataPointAnnotationPath": "com.sap.vocabularies.UI.v1.DataPoint#TotalCoursesKPI",
-          "presentationAnnotationPath": "com.sap.vocabularies.UI.v1.PresentationVariant#MyCourseChartPV"
+          "entitySet": "zlh_c_my_course_chart",
+          "contentFragment": "zlhbspmylearning.ext.cards.StatusChartCard",
+          "controllerName": "zlhbspmylearning.ext.cards.StatusChartCard"
         }
       }
     },

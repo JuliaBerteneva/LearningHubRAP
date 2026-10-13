@@ -1,0 +1,28 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:l="sap.ui.layout">
+    <VBox id="statusChartWrapper" class="sapUiSmallMargin">
+        <List id="statusChartList" items="{statusChart>/items}" showSeparators="None">
+            <CustomListItem id="statusChartListItem">
+                <l:VerticalLayout id="statusChartRow" width="100%" class="sapUiTinyMarginBottom">
+                    <HBox id="statusChartRowHeader" justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                        <ObjectStatus
+                            id="statusChartRowStatus"
+                            text="{statusChart>statusText}"
+                            state="{statusChart>state}"
+                            icon="sap-icon://circle-task-2"/>
+                        <ObjectNumber
+                            id="statusChartRowCount"
+                            number="{statusChart>count}"
+                            unit="{= ${statusChart>percent} + '%'}"
+                            emphasized="false"/>
+                    </HBox>
+                    <ProgressIndicator
+                        id="statusChartRowBar"
+                        percentValue="{statusChart>percent}"
+                        showValue="false"
+                        state="{statusChart>state}"
+                        height="0.5rem"/>
+                </l:VerticalLayout>
+            </CustomListItem>
+        </List>
+    </VBox>
+</core:FragmentDefinition>
