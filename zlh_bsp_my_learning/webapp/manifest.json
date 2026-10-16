@@ -24,14 +24,14 @@
         }
       },
       "mainService": {
-        "uri": "/sap/opu/odata4/sap/zlh_personal_growth/srvd/sap/zlh_personal_growth/0001/",
+        "uri": "/sap/opu/odata/sap/ZLH_CHARTS/",
         "type": "OData",
         "settings": {
           "annotations": [
             "annotation"
           ],
           "localUri": "localService/mainService/metadata.xml",
-          "odataVersion": "4.0"
+          "odataVersion": "2.0"
         }
       }
     }
@@ -59,7 +59,6 @@
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
-        "sap.fe.templates": {},
         "sap.ovp": {},
         "sap.ui.rta": {},
         "sap.ui.layout": {},
@@ -80,12 +79,7 @@
       },
       "mainModel": {
         "dataSource": "mainService",
-        "preload": true,
-        "settings": {
-          "operationMode": "Server",
-          "autoExpandSelect": true,
-          "earlyRequests": true
-        }
+        "preload": true
       },
       "@i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
@@ -109,7 +103,7 @@
     "considerAnalyticalParameters": false,
     "cards": {
       "MyCourseListCard": {
-        "template": "sap.ovp.cards.v4.table",
+        "template": "sap.ovp.cards.table",
         "model": "mainModel",
         "settings": {
           "entitySet": "zlh_c_my_course_list",
@@ -121,26 +115,21 @@
         }
       },
       "MyCourseChartCard": {
-        "template": "sap.ovp.cards.v4.custom",
+        "template": "sap.ovp.cards.charts.analytical",
         "model": "mainModel",
         "settings": {
+          "entitySet": "zlh_c_my_course_chart",
           "title": "Courses by Status",
           "subTitle": "Overview of your course progress",
-          "entitySet": "zlh_c_my_course_chart",
-          "contentFragment": "zlhbspmylearning.ext.cards.StatusChartCard",
-          "controllerName": "zlhbspmylearning.ext.cards.StatusChartCard"
+          "chartAnnotationPath": "com.sap.vocabularies.UI.v1.Chart#StatusChart",
+          "identificationAnnotationPath": "com.sap.vocabularies.UI.v1.Identification",
+          "dataPointAnnotationPath": "com.sap.vocabularies.UI.v1.DataPoint#TotalAmount"
         }
       }
-    },
-    "globalFilterControlType": "MacroFilterBar"
+    }
   },
   "sap.fiori": {
     "registrationIds": [],
     "archeType": "analytical"
-  },
-  "sap.fe": {
-    "app": {
-      "enableLazyLoading": true
-    }
   }
 }

@@ -3,8 +3,8 @@
     <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
         <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
     </edmx:Reference>
-    <edmx:Reference Uri="/sap/opu/odata4/sap/zlh_personal_growth/srvd/sap/zlh_personal_growth/0001/$metadata">
-        <edmx:Include Namespace="com.sap.gateway.srvd.zlh_personal_growth.v0001" Alias="SAP__self"/>
+    <edmx:Reference Uri="/sap/opu/odata/sap/ZLH_CHARTS/$metadata">
+        <edmx:Include Namespace="cds_zlh_charts" Alias="SAP__self"/>
     </edmx:Reference>
     <edmx:DataServices>
         <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
@@ -44,6 +44,44 @@
                 </Annotation>
             </Annotations>
             <Annotations Target="SAP__self.zlh_c_my_course_chartType">
+                <Annotation Term="UI.Chart" Qualifier="StatusChart">
+                    <Record Type="UI.ChartDefinitionType">
+                        <PropertyValue Property="ChartType" EnumMember="UI.ChartType/Donut"/>
+                        <PropertyValue Property="Title" String="Courses by Status"/>
+                        <PropertyValue Property="Dimensions">
+                            <Collection>
+                                <PropertyPath>Status</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="DimensionAttributes">
+                            <Collection>
+                                <Record Type="UI.ChartDimensionAttributeType">
+                                    <PropertyValue Property="Dimension" PropertyPath="Status"/>
+                                    <PropertyValue Property="Role" EnumMember="UI.ChartDimensionRoleType/Category"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Measures">
+                            <Collection>
+                                <PropertyPath>TotalAmount</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="MeasureAttributes">
+                            <Collection>
+                                <Record Type="UI.ChartMeasureAttributeType">
+                                    <PropertyValue Property="Measure" PropertyPath="TotalAmount"/>
+                                    <PropertyValue Property="Role" EnumMember="UI.ChartMeasureRoleType/Axis1"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.DataPoint" Qualifier="TotalAmount">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Value" Path="TotalAmount"/>
+                        <PropertyValue Property="Title" String="Total Courses"/>
+                    </Record>
+                </Annotation>
                 <Annotation Term="UI.Identification">
                     <Collection>
                         <Record Type="UI.DataFieldForIntentBasedNavigation">
