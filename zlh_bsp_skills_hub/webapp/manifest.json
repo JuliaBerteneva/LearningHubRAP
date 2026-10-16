@@ -59,6 +59,9 @@
         "sap.ui.controllerExtensions": {
           "sap.fe.templates.ListReport.ListReportController": {
             "controllerName": "zlhbspskillshub.ext.controller.ListReportExtend"
+          },
+          "sap.fe.templates.ObjectPage.ObjectPageController": {
+            "controllerName": "zlhbspskillshub.ext.controller.ObjectPageExtend"
           }
         }
       }
@@ -155,7 +158,19 @@
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/zlh_c_skill"
+              "contextPath": "/zlh_c_skill",
+              "content": {
+                "header": {
+                  "actions": {
+                    "SuggestForCustom": {
+                      "press": "/extension/zlhbspskillshub.ext.controller.ObjectPageExtend.onSuggestFor",
+                      "visible": true,
+                      "enabled": true,
+                      "text": "{i18n>suggestForButtonText}"
+                    }
+                  }
+                }
+              }
             }
           }
         }
