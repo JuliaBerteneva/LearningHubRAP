@@ -1,0 +1,3 @@
+sap.ui.define(["sap/ui/core/mvc/ControllerExtension","./SuggestForMixin"],function(e,t){"use strict";return e.extend("zlhbspskillshub.ext.controller.ListReportExtend",Object.assign({onSuggestFor:function(){var e=this.base.getExtensionAPI(),t=e.getSelecte+
+dContexts();this.suggestForOpen(t)}},t))});                                                                                                                                                                                                                    
+//# sourceMappingURL=ListReportExtend.controller.js.map                                                                                                                                                                                                        

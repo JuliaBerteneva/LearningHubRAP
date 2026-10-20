@@ -1,4 +1,9 @@
 @Metadata.layer: #CUSTOMER
+@UI.headerInfo: {
+  typeName:       'Course',
+  typeNamePlural: 'Courses',
+  title:          { type: #STANDARD, value: 'Name' }   
+}
 annotate entity zlh_c_course with
 {
   @UI.facet: [
@@ -22,7 +27,13 @@ annotate entity zlh_c_course with
          targetElement: '_materials',
          position: 20,
          label: 'Materials'
-    }
+    },
+    {
+         id: 'AvgRatingHeader',
+         purpose: #HEADER,
+         type: #DATAPOINT_REFERENCE,
+         targetQualifier: 'AverageRating',
+         label: 'Rating' }
     ]
   @ UI: {
     lineItem: [
@@ -43,8 +54,8 @@ annotate entity zlh_c_course with
   CourseKey;
   @ UI: {
     lineItem: [{ position: 1,
-                 label: 'Course Name',
-                 importance: #HIGH  }],
+                 label: 'Course Name'
+                  }],
     fieldGroup: [{ qualifier: 'Course',
                    position: 3 },
                  { qualifier: 'Header',
@@ -54,7 +65,7 @@ annotate entity zlh_c_course with
   Name;
   @ UI: {
     lineItem: [{ position: 3,
-                 importance: #HIGH ,
+    hidden: true,
                  label: 'Type'}],
     fieldGroup: [{ qualifier: 'Course',
                    position: 6 },
@@ -64,7 +75,7 @@ annotate entity zlh_c_course with
   Type;
   @ UI: {
     lineItem: [{ position: 2,
-                 importance: #HIGH ,
+                 hidden: true,
                  label: 'Skill Category'}],
     fieldGroup: [{ qualifier: 'Course',
                    position: 7 },
@@ -73,17 +84,17 @@ annotate entity zlh_c_course with
     }
   SkillCategory;
   @ UI: {
-    lineItem: [{ position: 3,
-                 label: 'Moderator',
-                 importance: #HIGH  }],
+    lineItem: [{ label: 'Moderator',
+                 hidden: true
+                 }],
     fieldGroup: [{ qualifier: 'Course',
                    position: 4 }]
     }
   Moderator;
   @ UI: {
     lineItem: [{ position: 4,
-                 label: 'Duration',
-                 importance: #HIGH  }],
+                 label: 'Duration'
+                 }],
     fieldGroup: [{ qualifier: 'Course',
                    position: 5 },
                  { qualifier: 'Header',
@@ -92,8 +103,7 @@ annotate entity zlh_c_course with
   Duration;
   @ UI: {
     lineItem: [{ position: 5,
-                 label: 'Course Released',
-                 importance: #HIGH
+                 label: 'Course Released'
                    }],
     fieldGroup: [{ qualifier: 'Course',
                    position: 5 },
@@ -101,6 +111,20 @@ annotate entity zlh_c_course with
                    position: 4 }]
     }
   Released;
+  @UI: {
+    lineItem: [{ position: 6,
+                 type: #AS_DATAPOINT,
+                 label: 'Course Average Rating',
+                 importance: #HIGH }],
+    identification: [{ position: 10,
+                 type: #AS_DATAPOINT,
+                 label: 'Average Rating' }],
+    fieldGroup: [{ qualifier: 'Course', position: 8 }],
+    dataPoint: { title: 'Average Rating',
+                 targetValue: 5,
+                 visualization: #RATING }
+  }
+  AverageRating;
   @ UI: {
     hidden: true
     }

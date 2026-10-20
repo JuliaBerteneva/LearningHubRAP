@@ -14,6 +14,7 @@ as select from zlh_i_user_course as user
     user.Userid,
     user.Name,
     user.Type,
+    user.Rating,
     user.SkillCategory,
     user.Moderator,
     user.Duration,

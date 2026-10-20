@@ -1,0 +1,67 @@
+@Metadata.layer: #CUSTOMER
+
+@UI.headerInfo: {
+  typeName: 'Skill',
+  typeNamePlural: 'Skills',
+  title: { type: #STANDARD, value: 'Name' }
+}
+annotate entity zlh_c_skill with
+{
+  @UI.facet: [
+    { id: 'SkillInfo', type: #IDENTIFICATION_REFERENCE, label: 'Skill Information', position: 10 },
+    { id: 'MyLearning', type: #FIELDGROUP_REFERENCE, targetQualifier: 'MyLearning', label: 'My Learning', position: 20 }
+  ]
+
+  @UI.lineItem: [
+    { type: #FOR_ACTION, dataAction: 'wantToLearn', label: 'Want to Learn', position: 60 }
+  ]
+  @UI.identification: [
+    { type: #FOR_ACTION, dataAction: 'wantToLearn', label: 'Want to Learn', position: 10 }
+  ]
+  @UI.hidden: true
+  SkillId;
+
+  @UI.lineItem: [{ position: 20, label: 'Name' }]
+  @UI.identification: [{ position: 10, label: 'Skill Name' }]
+  @UI.selectionField: [{ position: 10 }]
+  Name;
+
+  @UI.lineItem: [{ position: 30, label: 'Description' }]
+  @UI.identification: [{ position: 20, label: 'Skill Description' }]
+  Description;
+
+  @UI.hidden: true
+  Category;
+
+  @UI.lineItem: [{ position: 40, label: 'Category Name' }]
+  @UI.identification: [{ position: 30, label: 'Category Name' }]
+  CategoryName;
+
+  @UI.hidden: true
+  CreatedBy;
+
+  @UI.hidden: true
+  CreatedAt;          
+
+  @UI.hidden: true
+  LastChangedBy;
+
+  @UI.hidden: true
+  LastChangedAt;
+
+  @UI.lineItem: [{ position: 45, label: 'Acquired By Me' }]
+  @UI.fieldGroup: [{ qualifier: 'MyLearning', position: 10, label: 'Acquired By Me' }]
+  AcquiredByMe;
+
+//  @UI.lineItem: [{ position: 46, label: 'Proposed for Learning' }]
+  @UI.fieldGroup: [{ qualifier: 'MyLearning', position: 20, label: 'Proposed for Learning' }]
+  ProposedForLearning;
+//
+//  @UI.lineItem: [{ position: 47, label: 'Scale' }]
+  @UI.fieldGroup: [{ qualifier: 'MyLearning', position: 30, label: 'Scale' }]
+  Scale;
+//
+//  @UI.lineItem: [{ position: 48, label: 'Want to Learn' }]
+  @UI.fieldGroup: [{ qualifier: 'MyLearning', position: 40, label: 'Want to Learn' }]
+  WantToLearn;
+}

@@ -1,0 +1,6 @@
+@EndUserText.label: 'V2 services for charts'
+define service Zlh_charts {
+  expose zlh_c_my_course_chart;
+  expose zlh_c_my_courses_filter;
+  expose zlh_c_my_course_list;
+}

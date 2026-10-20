@@ -23,6 +23,7 @@ define root view entity zlh_r_course
       Moderator,
       Duration,
       Released,
+      AverageRating,
       @EndUserText.label: 'Created At'
       @Semantics.systemDateTime.createdAt: true
       LocalCreatedAt,

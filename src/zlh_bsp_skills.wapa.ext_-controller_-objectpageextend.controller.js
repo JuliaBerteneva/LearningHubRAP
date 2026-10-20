@@ -1,0 +1,3 @@
+sap.ui.define(["sap/ui/core/mvc/ControllerExtension","./SuggestForMixin"],function(e,t){"use strict";return e.extend("zlhbspskillshub.ext.controller.ObjectPageExtend",Object.assign({onSuggestFor:function(){var e=this.base.getExtensionAPI().getBindingCont+
+ext();this.suggestForOpen(e?[e]:[])}},t))});                                                                                                                                                                                                                   
+//# sourceMappingURL=ObjectPageExtend.controller.js.map                                                                                                                                                                                                        

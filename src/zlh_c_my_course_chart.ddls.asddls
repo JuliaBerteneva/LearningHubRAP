@@ -15,7 +15,7 @@ define view entity zlh_c_my_course_chart
   key CourseId,
       @ObjectModel.text.association: '_status'
       Status,
-      @DefaultAggregation: #SUM
-      1 as TotalAmount,
+      @Aggregation.default: #SUM
+      cast( 1 as abap.dec( 31,0 ) ) as TotalAmount,
       _status
 }

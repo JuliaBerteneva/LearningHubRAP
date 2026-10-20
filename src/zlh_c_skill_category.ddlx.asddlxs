@@ -2,6 +2,11 @@
 @UI.presentationVariant: [{
   sortOrder: [{ by: 'Name', direction: #DESC }]
 }]
+@UI.headerInfo: {
+  typeName:       'Skills Category',
+  typeNamePlural: 'Skills Categories',
+  title:          { type: #STANDARD, value: 'Name' }   
+}
 annotate entity zlh_c_skill_category with
 {
   @UI.facet: [

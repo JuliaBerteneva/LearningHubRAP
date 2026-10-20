@@ -1,0 +1,2 @@
+sap.ui.define(["./ObjectPageExtend.controller"],function(e){"use strict";return e});                                                                                                                                                                           
+//# sourceMappingURL=ObjectPageExtend.js.map                                                                                                                                                                                                                   

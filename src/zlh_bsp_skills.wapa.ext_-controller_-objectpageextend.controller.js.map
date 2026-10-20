@@ -1,0 +1,3 @@
+{"version":3,"file":"ObjectPageExtend.controller.js","names":["sap","ui","define","ControllerExtension","SuggestForMixin","extend","Object","assign","onSuggestFor","oContext","this","base","getExtensionAPI","getBindingContext","suggestForOpen"],"sources"+
+:["ObjectPageExtend-dbg.controller.js"],"mappings":"AAAAA,IAAIC,GAAGC,OAAO,CACV,sCACA,qBACD,SAAUC,EAAqBC,GAC9B,aAEA,OAAOD,EAAoBE,OAAO,kDAAmDC,OAAOC,OAAO,CAC/FC,aAAc,WACV,IAAIC,EAAWC,KAAKC,KAAKC,kBAAkBC,oBAE3CH,KAAKI,eAAeL,EAAW,CAACA,GAAY,GAChD,GACDL,GACP+
+","ignoreList":[]}                                                                                                                                                                                                                                             

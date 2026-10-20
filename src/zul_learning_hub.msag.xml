@@ -26,6 +26,12 @@
      <MSGNR>002</MSGNR>
      <TEXT>Add at least one material</TEXT>
     </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZUL_LEARNING_HUB</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Assignment to course not possible in draft mode</TEXT>
+    </T100>
    </T100>
   </asx:values>
  </asx:abap>

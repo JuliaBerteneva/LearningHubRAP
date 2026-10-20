@@ -1,0 +1,3 @@
+{"version":3,"file":"ListReportExtend.controller.js","names":["sap","ui","define","ControllerExtension","SuggestForMixin","extend","Object","assign","onSuggestFor","oExtensionAPI","this","base","getExtensionAPI","aSelectedContexts","getSelectedContexts",+
+"suggestForOpen"],"sources":["ListReportExtend-dbg.controller.js"],"mappings":"AAAAA,IAAIC,GAAGC,OAAO,CACV,sCACA,qBACD,SAAUC,EAAqBC,GAC9B,aAEA,OAAOD,EAAoBE,OAAO,kDAAmDC,OAAOC,OAAO,CAC/FC,aAAc,WACV,IAAIC,EAAgBC,KAAKC,KAAKC,kBAC1BC,EAAoBJ,EAAcK,sBAEtCJ,KAA+
+KK,eAAeF,EACxB,GACDT,GACP","ignoreList":[]}                                                                                                                                                                                                                    

@@ -23,6 +23,7 @@ as projection on zlh_r_course
     _moderator.FullName as ModeratorName,
     Duration,
     Released,
+    AverageRating,
     LocalCreatedAt,
     @ObjectModel.text.element: [ 'CreatedByName' ]
     LocalCreatedBy,

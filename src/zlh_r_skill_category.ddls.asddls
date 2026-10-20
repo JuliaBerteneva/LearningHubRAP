@@ -20,8 +20,8 @@ define root view entity zlh_r_skill_category
       @EndUserText.label: 'Created At'
       @Semantics.systemDateTime.createdAt: true
       CretedAt,
-      @EndUserText.label: 'Cchanged By'
-      @Semantics.user.createdBy: true
+      @EndUserText.label: 'Changed By'
+      @Semantics.user.lastChangedBy: true
       LastChangedBy,
       @EndUserText.label: 'Changed At'
       @Semantics.systemDateTime.lastChangedAt: true

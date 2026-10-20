@@ -1,0 +1,12 @@
+abstract;
+strict ( 2 );
+with hierarchy;
+
+define behavior for zlh_a_suggest_for alias SuggestFor
+{
+  association _Colleagues;
+}
+
+define behavior for zlh_a_colleague alias Colleague
+{
+}

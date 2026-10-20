@@ -3,10 +3,13 @@
 {
 "FROM":
 [
-"ZLH_SKILLS"
+"ZLH_SKILLS",
+"ZLH_USER_SKILL"
 ],
 "ASSOCIATED":
-[],
+[
+"ZLH_I_SKILL_CATEGORY"
+],
 "BASE":
 [],
 "ANNO_REF":

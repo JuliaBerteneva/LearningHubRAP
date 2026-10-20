@@ -11,10 +11,13 @@ authorization master ( instance )
   delete;
 
   static factory action UploadFromFile parameter zlh_a_skills_file [1];
-  mapping for zlh_user_skill {
+
+  mapping for zlh_user_skill corresponding{
     SkillId = skill_id;
     UserId = uname;
     Scale = scale;
+    WantToLearn = want_to_learn;
+    ProposedForLearning = proposed_for_learning;
   }
 
   field (readonly:update) SkillId;

@@ -17,6 +17,7 @@ association [1..1] to ZLH_I_Moderator_info as _changedBy on _changedBy .UserId =
     moderator as Moderator,
     duration as Duration,
     released as Released,
+    average_rating as AverageRating,
     @EndUserText.label: 'Created At'
     local_created_at as LocalCreatedAt,
     @EndUserText.label: 'Created By'

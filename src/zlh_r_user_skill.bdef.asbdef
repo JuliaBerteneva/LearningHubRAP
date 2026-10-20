@@ -1,0 +1,23 @@
+managed implementation in class zbp_lh_r_user_skill unique;
+strict ( 2 );
+
+define behavior for zlh_r_user_skill alias UserSkill
+persistent table zlh_user_skill
+lock master
+authorization master ( global )
+{
+  create;
+  update;
+  delete;
+
+  field ( readonly : update ) UserId, SkillId;
+
+  mapping for zlh_user_skill
+  {
+    UserId              = uname;
+    SkillId             = skill_id;
+    Scale               = scale;
+    WantToLearn         = want_to_learn;
+    ProposedForLearning = proposed_for_learning;
+  }
+}

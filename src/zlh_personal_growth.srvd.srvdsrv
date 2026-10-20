@@ -1,0 +1,9 @@
+@EndUserText.label: 'My Courses'
+define service ZLH_PERSONAL_GROWTH {
+  expose zlh_c_my_courses;
+  expose zlh_c_my_course_materials;
+  expose zlh_i_my_info;
+  expose zlh_c_course;
+  expose zlh_c_material;
+  expose ZLH_I_STATUS_VH;
+}

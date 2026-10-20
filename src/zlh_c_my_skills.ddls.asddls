@@ -12,11 +12,12 @@ define root view entity zlh_c_my_skills
       Description,
       @EndUserText.label: 'Category Id'
       Category,
-      Scale,
+      Scale,      
       @EndUserText.label: 'Want To Learn'
       WantToLearn,
       @EndUserText.label: 'Proposed For Learning'
-      ProposedForLearning
+      ProposedForLearning,
+      CategoryName
 //      approved,
 //      ApprovedBy
 }

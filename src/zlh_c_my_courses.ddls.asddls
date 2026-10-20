@@ -15,6 +15,7 @@ define root view entity zlh_c_my_courses
       Status,
       Percentage,
       Percent,
+      Rating,
       StartDate,
       EndDate,
       Criticality,

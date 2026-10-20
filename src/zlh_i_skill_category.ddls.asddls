@@ -9,7 +9,7 @@
 }
 define view entity zlh_i_skill_category
   as select from zlh_skill_categ
-  association [1..1] to ZLH_I_SKILL_CATEGORY_TEXT as _text on $projection.CategoryId = _text.CategoryId
+  association [0..1] to ZLH_I_SKILL_CATEGORY_TEXT as _text on $projection.CategoryId = _text.CategoryId
                                                            and _text.Language = $session.system_language
 {
   key category_id as CategoryId,

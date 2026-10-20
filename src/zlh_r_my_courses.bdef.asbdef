@@ -1,71 +1,97 @@
 managed implementation in class zbp_lh_r_my_courses unique;
 strict ( 2 );
+with draft;
+
 define behavior for zlh_r_my_courses alias Course
 persistent table zlh_user_course
+draft table zlh_user_cours_d
 lock master
-etag master LastChangedAt
+total etag LastChangedAt
 authorization master ( instance )
+etag master LastChangedAt
 {
   update;
   internal delete; //can be called inside BDEF implementation only
   internal create;
 
-  action changeStatus parameter zlh_a_status;
+  action changeStatus parameter zlh_a_status result [1] $self;
   action deleteMe;
   internal action recalcPercentage result [1] $self;
   internal action finishCourse result [1] $self;
+  action ( features : instance ) submitRating parameter zlh_a_rating result [1] $self;
+  action ( features : instance ) sendEmailToModerator parameter zlh_a_email_body result [1] $self;
 
-  field(readonly, numbering : managed) CourseId;
-  field(readonly) UserId, Percentage;
+  side effects
+  {
+    field Status affects permissions ( action submitRating );
+    field Rating affects permissions ( action submitRating );
+    action submitRating affects field Rating;
+  }
 
-  association _materials;
-  association _course;
+  field ( readonly, numbering : managed ) CourseId;
+  field ( readonly ) UserId, Percentage, Rating;
+
+  association _materials { with draft; }
+  association _course { with draft; }
 
   validation checkMaterialStatus on save { create; update; field Status; }
 
-
   mapping for zlh_user_course corresponding
+    {
+      UserId        = userid;
+      CourseId      = courseid;
+      Status        = status;
+      Percentage    = percentage;
+      StartDate     = start_date;
+      EndDate       = end_date;
+      LastChangedAt = last_changed_at;
+      Rating        = rating;
+    }
+
+  draft action Resume;
+  draft action ( features : instance ) Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft determine action Prepare
   {
-    UserId = userid;
-    CourseId = courseid;
-    Status = status;
-    Percentage = percentage;
-    StartDate = start_date;
-    EndDate = end_date;
-    LastChangedAt = last_changed_at;
   }
 }
 
 define behavior for zlh_r_my_course_materials alias Material
 persistent table zlh_user_mtrl
+draft table zlh_user_mtrl_d
 lock dependent by _course
 authorization dependent by _course
 etag master LastChangedAt
 {
-  update;
+  internal update;
   internal delete;
 
-  field ( readonly ) CourseId;
+  field ( readonly ) CourseId, Name, Duration, Content;
   field ( readonly : update ) MaterialId, UserId;
 
-  action (features : instance)changeStatusMaterial  parameter zlh_a_status ;
-  action (features : instance) markAsFinished;
+  action ( features : instance ) changeStatusMaterial parameter zlh_a_status result [1] $self;
+  action ( features : instance ) markAsFinished result [1] $self;
 
-  side effects { action markAsFinished affects entity _course; }
+  side effects
+  {
+    action markAsFinished affects entity _course;
+    action changeStatusMaterial affects entity _course;
+  }
 
   determination calculatePercentage on save { create; update; }
 
-  association _course;
+  association _course { with draft; }
 
   mapping for zlh_user_mtrl corresponding
-  {
-    UserId = userid;
-    CourseId = courseid;
-    MaterialId = materialid;
-    Status = status;
-    StartDate = start_date;
-    EndDate = end_date;
-    LastChangedAt = last_changed_at;
-  }
+    {
+      UserId        = userid;
+      CourseId      = courseid;
+      MaterialId    = materialid;
+      Status        = status;
+      StartDate     = start_date;
+      EndDate       = end_date;
+      LastChangedAt = last_changed_at;
+    }
 
 }

@@ -1,19 +1,28 @@
 projection;
 strict ( 2 );
+use draft;
 use side effects;
 
 define behavior for zlh_c_my_courses alias Course
 {
   use action changeStatus;
   use action deleteMe;
-  use association _materials;
-  use association _course;
+  use action submitRating;
+  use action sendEmailToModerator;
+
+  use association _materials { with draft; }
+  use association _course { with draft; }
+
+  use action Resume;
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Prepare;
 }
 
 define behavior for zlh_c_my_course_materials alias Material
 {
-  use update;
-  use association _course;
+  use association _course { with draft; }
   use action changeStatusMaterial;
   use action markAsFinished;
 }

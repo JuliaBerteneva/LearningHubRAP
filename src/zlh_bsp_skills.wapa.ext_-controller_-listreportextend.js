@@ -1,0 +1,2 @@
+sap.ui.define(["./ListReportExtend.controller"],function(t){"use strict";return t});                                                                                                                                                                           
+//# sourceMappingURL=ListReportExtend.js.map                                                                                                                                                                                                                   

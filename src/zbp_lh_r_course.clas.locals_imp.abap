@@ -13,23 +13,42 @@ CLASS lsc_zlh_r_course IMPLEMENTATION.
     DATA: ls_course       TYPE zlh_course,
           lt_input_course TYPE TABLE FOR CHANGE zlh_r_course\\course,
           ls_input_course LIKE LINE OF lt_input_course.
+
     IF create-course IS NOT INITIAL.
 
-      ls_input_course = create-course[ 1 ].
+      READ ENTITIES OF zlh_r_course IN LOCAL MODE
+        ENTITY course
+        ALL FIELDS
+        WITH CORRESPONDING #( create-course )
+        RESULT DATA(courses).
+      ls_input_course = CORRESPONDING #( courses[ 1 ] ).
     ENDIF.
     IF update-course IS NOT INITIAL.
 
-      ls_input_course = update-course[ 1 ].
+      READ ENTITIES OF zlh_r_course IN LOCAL MODE
+        ENTITY course
+        ALL FIELDS
+        WITH CORRESPONDING #( update-course )
+        RESULT DATA(upd_courses).
+      ls_input_course = CORRESPONDING #( upd_courses[ 1 ] ).
     ENDIF.
     IF ls_input_course IS NOT INITIAL.
       TRY.
           lo_container = cl_swf_evt_event=>get_event_container( im_objcateg = cl_swf_evt_event=>mc_objcateg_cl
                                                                 im_objtype  = 'ZCL_LH_CWF'
                                                                 im_event    = 'RAISE_APPROVAL' ).
+
+          ls_course = CORRESPONDING #( ls_input_course ).
           ls_course-course_id = ls_input_course-courseId.
-          ls_course-course_key = ls_input_course-CourseKey.
+          ls_course-course_key  = ls_input_course-CourseKey.
+          ls_course-average_rating = ls_input_course-AverageRating.
+          ls_course-skill_category = ls_input_course-SkillCategory.
           lo_container->set( name  = 'IS_COURSE'
                              value = ls_course ).
+          lo_container->set( name  = 'IV_SUBMITTER'
+                             value = sy-uname ).
+          lo_container->set( name  = 'IV_MODERATOR'
+                             value = |US{ ls_course-moderator }| ).
           lo_container->set( name  = 'Course_Link'
                              value = |https://us4.leverx.local:44302/sap/bc/ui2/flp?sap-client=100&sap-language=EN#LEARNING_HUB-manage&/zlh_c_course(CourseId=guid'{ ls_input_course-courseId }',IsActiveEntity=true)| ).
 
@@ -45,6 +64,21 @@ CLASS lsc_zlh_r_course IMPLEMENTATION.
           "handle exception
       ENDTRY.
     ENDIF.
+
+    IF delete-course IS NOT INITIAL.
+
+      LOOP AT delete-course INTO DATA(ls_del).
+
+        DELETE FROM zlh_user_mtrl
+          WHERE courseid = @ls_del-CourseId.
+
+        DELETE FROM zlh_user_course
+          WHERE courseid = @ls_del-CourseId.
+
+      ENDLOOP.
+
+    ENDIF.
+
   ENDMETHOD.
 
 ENDCLASS.
@@ -67,6 +101,9 @@ CLASS lhc_course DEFINITION INHERITING FROM cl_abap_behavior_handler FRIENDS ltc
 
     METHODS recalcduration FOR MODIFY
       IMPORTING keys FOR ACTION course~recalcduration.
+
+    METHODS updateaveragerating FOR MODIFY
+      IMPORTING keys FOR ACTION course~updateaveragerating.
 
     METHODS get_features_material FOR INSTANCE FEATURES
       IMPORTING keys REQUEST requested_features FOR material RESULT result.
@@ -146,28 +183,60 @@ CLASS lhc_course IMPLEMENTATION.
         WITH CORRESPONDING #( courses ).
   ENDMETHOD.
 
+  METHOD updateaveragerating.
+    MODIFY ENTITIES OF zlh_r_course IN LOCAL MODE
+      ENTITY course
+      UPDATE FIELDS ( averagerating )
+      WITH VALUE #( FOR key IN keys
+                    ( %tky          = key-%tky
+                      averagerating = key-%param-rating ) )
+      FAILED failed
+      REPORTED reported.
+  ENDMETHOD.
+
   METHOD assignmetocourse.
     DATA: course_connections   TYPE TABLE OF zlh_user_course,
-          material_connections TYPE TABLE OF zlh_user_mtrl.
+          material_connections TYPE TABLE OF zlh_user_mtrl,
+          lt_active_keys       LIKE keys.
+
+    LOOP AT keys ASSIGNING FIELD-SYMBOL(<key>) WHERE %is_draft = if_abap_behv=>mk-on.
+      APPEND VALUE #( %tky = <key>-%tky ) TO failed-course.
+      APPEND VALUE #( %tky = <key>-%tky
+                      %msg = new_message( id       = 'ZUL_LEARNING_HUB'
+                                          number   = '003'
+                                          severity = if_abap_behv_message=>severity-error )
+                    ) TO reported-course.
+    ENDLOOP.
+
+    lt_active_keys = VALUE #( FOR k IN keys WHERE ( %is_draft = if_abap_behv=>mk-off ) ( k ) ).
+
+    IF lt_active_keys IS INITIAL.
+      RETURN.
+    ENDIF.
+
     READ ENTITIES OF zlh_r_course IN LOCAL MODE
       ENTITY course
       FIELDS ( courseid )
-      WITH CORRESPONDING #( keys )
+      WITH CORRESPONDING #( lt_active_keys )
       RESULT DATA(courses)
-         FAILED failed.
+      FAILED failed.
 
     READ ENTITIES OF zlh_r_course IN LOCAL MODE
       ENTITY course BY \_materials
       FIELDS ( courseid materialid )
       WITH CORRESPONDING #( courses )
-     LINK DATA(material_links)
-     RESULT DATA(materials).
+      LINK DATA(material_links)
+      RESULT DATA(materials).
+
     LOOP AT courses ASSIGNING FIELD-SYMBOL(<course>).
       INSERT VALUE #( userid     = sy-uname
                       courseid   = <course>-courseid
                       status     = zcl_cc_zlh_status=>gc_inprocess
                       start_date = sy-datum ) INTO TABLE course_connections.
-      LOOP AT materials ASSIGNING FIELD-SYMBOL(<material>).
+
+      LOOP AT materials ASSIGNING FIELD-SYMBOL(<material>)
+        USING KEY entity
+        WHERE courseid = <course>-courseid.
         INSERT VALUE #( userid     = sy-uname
                         materialid = <material>-materialid
                         courseid   = <course>-courseid
@@ -175,9 +244,11 @@ CLASS lhc_course IMPLEMENTATION.
                         start_date = sy-datum ) INTO TABLE material_connections.
       ENDLOOP.
     ENDLOOP.
+
     IF course_connections IS NOT INITIAL.
       MODIFY zlh_user_course FROM TABLE course_connections.
     ENDIF.
+
     IF material_connections IS NOT INITIAL.
       MODIFY zlh_user_mtrl FROM TABLE material_connections.
     ENDIF.
@@ -238,14 +309,18 @@ CLASS lhc_course IMPLEMENTATION.
                       ( %tky      = course-%tky
                         %features = VALUE #( %assoc-_materials = COND #( WHEN course-released  = abap_true
                                            THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled )
-                                             %field            = VALUE #(     coursekey        = COND #( WHEN course-released = abap_true
+                                             %field            = VALUE #(     coursekey        = COND #( WHEN                                                                                      course-released  = abap_true
                                                                                                          THEN if_abap_behv=>fc-f-read_only ELSE if_abap_behv=>fc-f-unrestricted )
-                                                                              name             = COND #( WHEN course-released = abap_true
+                                                                              name             = COND #( WHEN                                                                                      course-released  = abap_true
                                                                                                          THEN if_abap_behv=>fc-f-read_only ELSE if_abap_behv=>fc-f-unrestricted ) )
-                                             %action           = VALUE #(     assignmetocourse = COND #( WHEN line_exists( assigned_courses[ courseid = course-courseid ] )
-                                                                                                         THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled )
-                                                                              releasecourse    = COND #( WHEN course-released = abap_true
-                                                                                                         THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled ) )
+                                             %action           = VALUE #(     assignmetocourse = COND #( WHEN                                                                                      course-%is_draft = if_abap_behv=>mk-on
+                                                                                                         OR line_exists( assigned_courses[ courseid = course-courseid ] )
+                                                                                                         THEN if_abap_behv=>fc-o-disabled
+                                                                                                         ELSE if_abap_behv=>fc-o-enabled )
+                                                                              releasecourse    = COND #( WHEN                                                                                      course-released  = abap_true
+                                                                                                         OR                                                                                        course-%is_draft = if_abap_behv=>mk-on
+                                                                                                         THEN if_abap_behv=>fc-o-disabled
+                                                                                                         ELSE if_abap_behv=>fc-o-enabled ) )
                     )
                     ) ).
   ENDMETHOD.
@@ -269,17 +344,21 @@ CLASS lhc_course IMPLEMENTATION.
       INSERT VALUE #( %tky        = <material>-%tky
                       %state_area = 'CHECK_DURATION'
                     ) INTO TABLE reported-material.
-      IF <material>-duration > 100.                       "#EC CI_MAGIC
+      IF <material>-duration <= 0 OR <material>-duration > 100. "#EC CI_MAGIC
         INSERT VALUE #( %tky        = <material>-%tky
                         %fail-cause = if_abap_behv=>cause-not_found ) INTO TABLE failed-material.
         INSERT VALUE #( %tky              = <material>-%tky
                         %state_area       = 'CHECK_DURATION'
-                        %msg              = me->new_message( id        = 'ZUL_LEARNING_HUB'
-                                                             number    = '000'
-                                                             severity  = ms-error )
+                        %msg              = COND #( WHEN <material>-duration <= 0
+                        THEN me->new_message_with_text(
+                                            severity = ms-error
+                                            text     = 'Duration is mandatory.' )
+                      ELSE me->new_message( id       = 'ZUL_LEARNING_HUB'
+                                            number   = '000'
+                                            severity = ms-error ) )
                         %element-duration = if_abap_behv=>mk-on
-                        %path-course      = VALUE #(         %is_draft = <material>-%is_draft
-                                                             courseid  = <material>-courseid )
+                        %path-course      = VALUE #( %is_draft = <material>-%is_draft
+                                                     courseid  = <material>-courseid )
                       ) INTO TABLE reported-material.
       ENDIF.
     ENDLOOP.

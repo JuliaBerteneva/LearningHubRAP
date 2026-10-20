@@ -17,7 +17,7 @@ etag master LocalLastChangedAt
 
   field ( readonly, numbering : managed ) CourseId;
   field ( features : instance ) CourseKey, Name;
-  field ( readonly ) LastChangedAt, LocalCreatedBy, LocalCreatedAt, LocalLastChangedAt, LocalLastChangedBy, Duration;
+  field ( readonly ) LastChangedAt, LocalCreatedBy, LocalCreatedAt, LocalLastChangedAt, LocalLastChangedBy, Duration, AverageRating;
 
   side effects
   { field Released affects permissions ( field _materials.Name, field _materials.Type, field _materials.Content ), $self;
@@ -27,6 +27,7 @@ etag master LocalLastChangedAt
   action ( features : instance ) assignMeToCourse;
   action ( features : instance ) releaseCourse;
   internal action recalcDuration;
+  action updateAverageRating parameter zlh_a_rating;
 
   validation checkMaterailsEmpty on save{ create; update; }
 
@@ -43,6 +44,7 @@ etag master LocalLastChangedAt
       Moderator          = moderator;
       Duration           = duration;
       Released           = released;
+      AverageRating      = average_rating;
       LocalCreatedAt     = local_created_at;
       LocalCreatedBy     = local_created_by;
       LocalLastChangedAt = local_last_changed_at;

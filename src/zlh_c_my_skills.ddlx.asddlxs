@@ -1,59 +1,67 @@
 @Metadata.layer: #CUSTOMER
+@UI.headerInfo: {
+  typeName: 'My Skills',
+  typeNamePlural: 'My Skills',
+  title: { type: #STANDARD, value: 'SkillName' },
+  description: { type: #STANDARD, value: 'Description' }
+}
 annotate entity zlh_c_my_skills with
 {
   @UI.facet: [
     {
-         id:'MySkillInfo',
-         type: #FIELDGROUP_REFERENCE,
-         purpose:         #STANDARD,
-         position: 10,
-         targetQualifier: 'MySkills',
-         label: 'MySkills'
+      id:              'MySkillInfo',
+      type:            #FIELDGROUP_REFERENCE,
+      purpose:         #STANDARD,
+      position:        10,
+      targetQualifier: 'MySkillInfo',
+      label:           'My Skills'
     }
-      ]
-  @ UI: {
-      lineItem: [{ position: 1,
-                   hidden: true  } ],
-      fieldGroup: [{ qualifier: 'MySkillInfo',
-                     position: 1 }
-      ]
-       }
+  ]
+
+  @UI: {
+    lineItem:   [{ position: 10, hidden: true }],
+    fieldGroup: [{ qualifier: 'MySkillInfo', position: 10 }]
+  }
   SkillId;
-  @ UI: {
-    lineItem: [{ position: 2  },
-                  {type: #FOR_ACTION, dataAction: 'UploadFromFile', label: 'Upload File', position: 10 }],
-    fieldGroup: [{ qualifier: 'MySkillInfo',
-                   position: 2 }]
-     }
+
+  @UI: {
+    lineItem:   [{ position: 20 },
+                 { type: #FOR_ACTION, dataAction: 'UploadFromFile', label: 'Upload File', position: 10 }],
+    fieldGroup: [{ qualifier: 'MySkillInfo', position: 20 }]
+  }
   SkillName;
-  @ UI: {
-    lineItem: [{ position: 3  }],
-    fieldGroup: [{ qualifier: 'MySkillInfo',
-                   position: 3 }]
-     }
+
+  @UI: {
+    lineItem:   [{ position: 30 }],
+    fieldGroup: [{ qualifier: 'MySkillInfo', position: 30 }]
+  }
   Description;
-  @ UI: {
-    lineItem: [{ position: 4  }],
-    fieldGroup: [{ qualifier: 'MySkillInfo',
-                   position: 4 }]
-     }
+
+  @UI: {
+    lineItem:   [{ position: 40, label: 'Category Name' }],
+    fieldGroup: [{ qualifier: 'MySkillInfo', position: 40, label: 'Category' }]
+  }
+  CategoryName;
+  
+  @UI.hidden: true
   Category;
-  @ UI: {
-    lineItem: [{ position: 5  }],
-    fieldGroup: [{ qualifier: 'MySkillInfo',
-                   position: 5 }]
-     }
+
+  @UI: {
+    lineItem:   [{ position: 50 }],
+    fieldGroup: [{ qualifier: 'MySkillInfo', position: 50 }]
+  }
   Scale;
-  @ UI: {
-    lineItem: [{ position: 6  }],
-    fieldGroup: [{ qualifier: 'MySkillInfo',
-                   position: 6 }]
-     }
+
+  @UI: {
+    lineItem:   [{ position: 60 }],
+    fieldGroup: [{ qualifier: 'MySkillInfo', position: 60 }]
+  }
   WantToLearn;
-  @ UI: {
-    lineItem: [{ position: 7  }],
-    fieldGroup: [{ qualifier: 'MySkillInfo',
-                   position: 7 }]
-     }
+
+  @UI: {
+    lineItem:   [{ position: 70 }],
+    fieldGroup: [{ qualifier: 'MySkillInfo', position: 70 }]
+  }
   ProposedForLearning;
+
 }

@@ -3,4 +3,6 @@ define service Zlh_skills
   provider contracts odata_v4_ui, odata_v2_ui {
   expose zlh_c_skill_category;
   expose zlh_c_my_skills;
+  expose zlh_c_skill;
+  expose zlh_i_team;
 }

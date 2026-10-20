@@ -11,10 +11,13 @@ CLASS zcl_lh_cwf DEFINITION
 
     EVENTS raise_approval
       EXPORTING
-        VALUE(is_course) TYPE zlh_course .
+        VALUE(is_course)    TYPE zlh_course
+        VALUE(iv_submitter) TYPE bname
+        VALUE(iv_moderator) TYPE bname .
 
     CLASS-METHODS ld_approve .
-    CLASS-METHODS run_approval .
+    CLASS-METHODS run_approval EXPORTING VALUE(is_course) TYPE zlh_course.
+    CLASS-METHODS release_course CHANGING cs_course TYPE zlh_course .
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -71,5 +74,25 @@ CLASS zcl_lh_cwf IMPLEMENTATION.
         "handle exception
     ENDTRY.
     COMMIT WORK.
+  ENDMETHOD.
+  METHOD release_course.
+    DATA: lt_courses TYPE TABLE OF zlh_course.
+    APPEND cs_course TO lt_courses.
+    READ ENTITIES OF zlh_r_course
+      ENTITY course
+      FIELDS ( courseid released )
+      WITH CORRESPONDING #( lt_courses )
+      RESULT DATA(courses).
+
+    LOOP AT courses ASSIGNING FIELD-SYMBOL(<course>).
+      <course>-released = abap_true.
+    ENDLOOP.
+
+    MODIFY ENTITIES OF zlh_r_course
+      ENTITY course
+        UPDATE FIELDS ( released )
+        WITH CORRESPONDING #( courses ).
+
+    COMMIT ENTITIES.
   ENDMETHOD.
 ENDCLASS.
